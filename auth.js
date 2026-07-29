@@ -1,4 +1,5 @@
-﻿/**
+﻿
+ï»¿/**
  * Hearth and Heal - Authentication Logic
  * Robust system with Email Verification, Password hashing, and 2FA OTP.
  */
@@ -419,5 +420,4 @@ const Auth = {
 })();
 
 Auth.checkSession();
-
 
