@@ -2,6 +2,32 @@
    Hearth and Heal - Interactions 
 */
 
+function makePlaceholderImage(label) {
+    const safeLabel = String(label || 'Image').slice(0, 28).replace(/[<>"']/g, '');
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+            <rect width="100%" height="100%" fill="#0f172a"/>
+            <rect x="24" y="24" width="752" height="452" rx="28" fill="#111827" stroke="#00E676" stroke-width="3"/>
+            <circle cx="400" cy="210" r="100" fill="#1f2937"/>
+            <path d="M318 280c18-52 60-80 82-80s64 28 82 80" fill="#00E676" opacity="0.75"/>
+            <rect x="180" y="352" width="440" height="40" rx="20" fill="#00E676" opacity="0.2"/>
+            <text x="400" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#f9fafb">${safeLabel}</text>
+        </svg>`;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function attachImageFallback(img) {
+    if (!img || img.dataset.fallbackAttached === 'true') return;
+    img.dataset.fallbackAttached = 'true';
+    img.addEventListener('error', () => {
+        const fallbackSrc = makePlaceholderImage(img.getAttribute('alt') || img.getAttribute('title') || 'Image');
+        if (img.getAttribute('src') !== fallbackSrc) {
+            img.setAttribute('src', fallbackSrc);
+            img.removeAttribute('onerror');
+        }
+    }, { once: true });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Mobile Menu Toggle
@@ -58,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     animatedElements.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('img').forEach(attachImageFallback);
 
     // Parallax Effect
     window.addEventListener('scroll', () => {
