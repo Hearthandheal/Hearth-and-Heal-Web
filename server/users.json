@@ -1,1 +1,10 @@
-﻿[]
+[
+  {
+    "id": "demo-user-id",
+    "email": "demo@hearth.local",
+    "name": "Demo User",
+    "password": "$2a$10$GYPTheMRM./3sA9msGu0..JLZPjk67ehhC9w/Jf/IpWg5ywU3ruKm",
+    "twoFactor": true,
+    "avatar": null
+  }
+]
