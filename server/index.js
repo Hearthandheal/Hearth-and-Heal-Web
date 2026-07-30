@@ -51,6 +51,20 @@ if (!users.find(u => u.email === demoEmail)) {
   console.log('Created demo user:', demoEmail, 'password: password123');
 }
 
+// If the file is empty or invalid, seed a demo user again during startup
+if (!users.length) {
+  const u = {
+    id: uuidv4(),
+    email: demoEmail,
+    name: 'Demo User',
+    password: bcrypt.hashSync('password123', 10),
+    twoFactor: true,
+    avatar: null
+  };
+  users.push(u);
+  saveUsers();
+}
+
 // Serve static files from repo root so login.html loads at http://localhost:3000/login.html
 app.use(express.static(path.join(__dirname, '..')));
 
@@ -65,10 +79,11 @@ function createRef() { return uuidv4(); }
 app.post('/login', (req, res) => {
   const { email, password } = req.body || {};
   if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
-  const user = users.find(u => u.email === String(email).toLowerCase());
-  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+  const normalized = String(email).toLowerCase().trim();
+  const user = users.find(u => u.email === normalized);
+  if (!user) return res.status(401).json({ error: 'Invalid credentials', debug: { userFound: false, passValid: false } });
   if (!bcrypt.compareSync(String(password), user.password)) {
-    return res.status(401).json({ error: 'Invalid credentials' });
+    return res.status(401).json({ error: 'Invalid credentials', debug: { userFound: true, passValid: false } });
   }
 
   if (user.twoFactor) {
