@@ -72,6 +72,7 @@ function createRef() { return uuidv4(); }
 
 // POST /request-verification - signup step 1 (dev returns code)
 app.post('/request-verification', (req, res) => {
+  loadUsers();
   const { email } = req.body || {};
   if (!email) return res.status(400).json({ error: 'Email required' });
   const normalized = String(email).toLowerCase().trim();
@@ -84,6 +85,7 @@ app.post('/request-verification', (req, res) => {
 
 // POST /verify-email - signup step 2
 app.post('/verify-email', (req, res) => {
+  loadUsers();
   const { ref, code, password } = req.body || {};
   if (!ref || !code || !password) return res.status(400).json({ error: 'ref, code and password required' });
   const entry = otps.get(ref);
@@ -101,6 +103,7 @@ app.post('/verify-email', (req, res) => {
 
 // POST /login - password-based first step
 app.post('/login', (req, res) => {
+  loadUsers();
   const { email, password } = req.body || {};
   if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
   const normalized = String(email).toLowerCase().trim();
