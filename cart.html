@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearth and Heal | Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="styles-premium.css">
+    <script src="auth.js"></script>
+    <style>
+        /* Modern Premium Cart Styles */
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #00E676 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .cart-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .cart-items-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Cart Items Header */
+        .cart-items-header {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr 1.2fr 1fr 60px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr 1.2fr 1fr 60px;
+            align-items: center;
+            padding: 25px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            margin: 0 -15px;
+            padding: 25px 15px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .product-details h4 {
+            color: white;
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .product-details .product-meta {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .product-details .product-variant {
+            display: inline-flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .product-details .product-variant span {
+            background: rgba(0, 230, 118, 0.1);
+            color: #00E676;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .price {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            padding: 6px;
+            width: fit-content;
+        }
+
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0, 230, 118, 0.15);
+            color: #00E676;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .quantity-btn:hover {
+            background: #00E676;
+            color: #0d0d0d;
+            transform: scale(1.1);
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .item-total {
+            color: #00E676;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .btn-remove {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove:hover {
+            background: #ff4444;
+            color: white;
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /* Empty Cart State */
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-cart-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(0, 230, 118, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            color: #00E676;
+        }
+
+        .empty-cart h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .btn-continue-shopping {
+            background: transparent;
+            color: #00E676;
+            border: 2px solid #00E676;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue-shopping:hover {
+            background: #00E676;
+            color: #0d0d0d;
+        }
+
+        .cart-summary {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 100px;
+        }
+
+        .cart-summary h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .summary-row.total {
+            color: #00E676;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .cart-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn-checkout {
+            background: linear-gradient(135deg, #00E676 0%, #00c853 100%);
+            color: #0d0d0d;
+            padding: 18px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px -5px rgba(0, 230, 118, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px -5px rgba(0, 230, 118, 0.5);
+        }
+
+        .btn-whatsapp {
+            background: rgba(37, 211, 102, 0.1);
+            color: #25D366;
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            padding: 16px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-whatsapp:hover {
+            background: #25D366;
+            color: white;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .trust-badge svg {
+            color: #00E676;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .cart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .cart-items-header {
+                display: none;
+            }
+
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 25px;
+                background: rgba(255, 255, 255, 0.02);
+                border-radius: 16px;
+                margin-bottom: 20px;
+            }
+
+            .cart-item:hover {
+                margin: 0 0 20px 0;
+                padding: 25px;
+            }
+
+            .product-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cart-container">
+        <div class="cart-header">
+            <h1>Your Shopping Cart</h1>
+            <p style="color: rgba(255,255,255,0.6);">Review your items and proceed to checkout</p>
+        </div>
+
+        <div class="cart-grid">
+            <div class="cart-items-section">
+                <div class="cart-items-header">
+                    <span>Product</span>
+                    <span>Price</span>
+                    <span>Quantity</span>
+                    <span>Total</span>
+                    <span></span>
+                </div>
+                <div id="cart-body">
+                    <!-- Cart items will be injected here by shop.js -->
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">KSH 0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span style="color: #00E676;">Free</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="cart-total">KSH 0</span>
+                </div>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label for="cart-mpesa-phone">M-Pesa Phone Number</label>
+                    <input type="tel" id="cart-mpesa-phone" placeholder="2547XXXXXXXX" pattern="2547[0-9]{8}" minlength="12" maxlength="12" style="width:100%; padding: 0.9rem 1rem; border-radius: 18px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #fff; margin-top: 0.5rem;">
+                    <small style="color: rgba(255,255,255,0.7);">Enter the number in 2547XXXXXXXX format.</small>
+                </div>
+                <div id="cart-stk-status" style="display:none; margin-top: 1rem; padding: 15px; border-radius: 16px; background: rgba(0,230,118,0.12); color: #e9f7ef; border: 1px solid rgba(0,230,118,0.24); font-size: 0.95rem;"></div>
+                <div class="cart-actions">
+                    <button id="btn-cart-stk" class="btn-checkout">
+                        <i data-feather="smartphone"></i> Pay with M-Pesa
+                    </button>
+                    <a href="checkout.html" class="btn-checkout">
+                        <i data-feather="credit-card"></i> Proceed to Checkout
+                    </a>
+                    <button id="btn-cart-whatsapp" class="btn-whatsapp">
+                        <i data-feather="message-circle"></i> Order via WhatsApp
+                    </button>
+                    <a href="shop.html" class="btn-continue-shopping">
+                        <i data-feather="arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i data-feather="shield-check"></i>
+                        <span>Secure Checkout</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i data-feather="truck"></i>
+                        <span>Free Delivery in Nairobi</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i data-feather="refresh-cw"></i>
+                        <span>Easy Returns</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
+    <script src="shop.js"></script>
+    <script src="hero-slideshow.js"></script>
+</body>
+
+</html>

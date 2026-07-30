@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: hearth-and-heal-api
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: BASE_URL
+        value: https://hearth-heal-org.onrender.com
+      # Email Configuration (Brevo)
+      - key: BREVO_API_KEY
+        sync: false
+      - key: BREVO_SMTP_LOGIN
+        value: a6febf001@smtp-brevo.com
+      - key: EMAIL_FROM
+        value: hearthandhealorg@gmail.com
+      # Security
+      - key: JWT_SECRET
+        sync: false
+      - key: WEBHOOK_SHARED_SECRET
+        sync: false
+      # M-Pesa Configuration
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_SHORTCODE
+        value: "174379"
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_CALLBACK_URL
+        value: https://hearth-heal-org.onrender.com/webhooks/mpesa
+      - key: MPESA_ENV
+        value: sandbox

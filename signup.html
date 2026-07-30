@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Hearth and Heal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="styles-premium.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                radial-gradient(ellipse at top right, rgba(0, 230, 118, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(0, 230, 118, 0.05) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #0f0f0f 50%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 230, 118, 0.03) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+                0 0 100px rgba(0, 230, 118, 0.1);
+            animation: cardAppear 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00E676, transparent);
+            border-radius: 24px 24px 0 0;
+            opacity: 0.8;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #ffffff 0%, #00E676 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .auth-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #00E676;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
+            transform: scale(1.2);
+        }
+
+        .progress-dot.completed {
+            background: #00E676;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 230, 118, 0.5);
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .form-group input.error {
+            border-color: #ff4444;
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+        }
+
+        .form-group input.success {
+            border-color: #00E676;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.2);
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            width: 0%;
+        }
+
+        .strength-weak .strength-fill {
+            width: 33%;
+            background: #ff4444;
+        }
+
+        .strength-medium .strength-fill {
+            width: 66%;
+            background: #ffaa00;
+        }
+
+        .strength-strong .strength-fill {
+            width: 100%;
+            background: #00E676;
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+        }
+
+        .strength-text {
+            margin-top: 0.4rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Buttons */
+        .auth-btn {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #00E676 0%, #00c853 100%);
+            border: none;
+            border-radius: 12px;
+            color: #000000;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .auth-btn:hover::before {
+            left: 100%;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.3);
+        }
+
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Error/Success Messages */
+        .message-box {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-box.error {
+            display: block;
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+
+        .message-box.success {
+            display: block;
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            color: #00E676;
+        }
+
+        /* Step Transitions */
+        .step-1, .step-2 {
+            transition: all 0.4s ease;
+        }
+
+        .step-1.hidden, .step-2.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .step-1.show, .step-2.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+            animation: slideIn 0.4s ease;
+        }
+
+        /* Auth Links */
+        .auth-links {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .auth-links a {
+            color: #00E676;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            color: #00ff88;
+            text-decoration: underline;
+        }
+
+        /* Resend Button */
+        .resend-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .resend-btn:hover:not(:disabled) {
+            color: #00E676;
+        }
+
+        .resend-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 0.8s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .auth-header h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Join the Community</h1>
+                <p>Start your healing journey today</p>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="progress-indicator">
+                <div class="progress-dot active" id="dot1"></div>
+                <div class="progress-dot" id="dot2"></div>
+            </div>
+
+            <!-- Signup Form -->
+            <form id="signupForm">
+                <!-- Step 1: Email Request -->
+                <div class="step-1 show" id="step1">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="Enter your email" autocomplete="email">
+                    </div>
+                    <button type="button" id="btn-request" class="auth-btn">
+                        <span class="btn-text">Send Verification Code</span>
+                    </button>
+                </div>
+
+                <!-- Step 2: Verification & Password -->
+                <div class="step-2 hidden" id="step2">
+                    <div class="form-group">
+                        <label for="code">Verification Code</label>
+                        <input type="text" id="code" placeholder="6-digit code from email" maxlength="6" autocomplete="one-time-code">
+                        <button type="button" id="resendBtn" class="resend-btn" disabled>Resend Code</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Create Password</label>
+                        <input type="password" id="password" placeholder="Min. 6 characters" autocomplete="new-password">
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Password strength</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="auth-btn">
+                        <span class="btn-text">Complete Signup</span>
+                    </button>
+                </div>
+
+                <div id="errorMsg" class="message-box error"></div>
+                <div id="successMsg" class="message-box success"></div>
+            </form>
+
+            <div class="auth-links">
+                <p>Already have an account? <a href="login.html">Log In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        let currentStep = 1;
+        let cooldownTimer = null;
+
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            return strength;
+        }
+
+        // Update password strength indicator
+        function updatePasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthDiv = document.getElementById('passwordStrength');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+
+            if (password.length === 0) {
+                strengthDiv.classList.remove('show');
+                return;
+            }
+
+            strengthDiv.classList.add('show');
+            const strength = checkPasswordStrength(password);
+
+            strengthDiv.classList.remove('strength-weak', 'strength-medium', 'strength-strong');
+            
+            if (strength <= 2) {
+                strengthDiv.classList.add('strength-weak');
+                strengthText.textContent = 'Weak password';
+            } else if (strength <= 4) {
+                strengthDiv.classList.add('strength-medium');
+                strengthText.textContent = 'Medium strength';
+            } else {
+                strengthDiv.classList.add('strength-strong');
+                strengthText.textContent = 'Strong password';
+            }
+        }
+
+        // Real-time email validation
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const errorDiv = document.getElementById('errorMsg');
+            
+            if (email && !validateEmail(email)) {
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else if (email && validateEmail(email)) {
+                this.classList.remove('error');
+                this.classList.add('success');
+                errorDiv.classList.remove('error');
+                errorDiv.style.display = 'none';
+            } else {
+                this.classList.remove('error', 'success');
+            }
+        });
+
+        // Password input listener
+        document.getElementById('password').addEventListener('input', function() {
+            updatePasswordStrength();
+        });
+
+        // Confirm password validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.classList.add('error');
+                this.classList.remove('success');
+            } else if (confirmPassword && password === confirmPassword) {
+                this.classList.remove('error');
+                this.classList.add('success');
+            } else {
+                this.classList.remove('error', 'success');
+            }
+        });
+
+        async function requestSignup() {
+            const email = document.getElementById('email').value;
+            const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
+            const btn = document.getElementById('btn-request');
+            const btnText = btn.querySelector('.btn-text');
+
+            // Clear previous messages
+            errorDiv.classList.remove('error');
+            errorDiv.style.display = 'none';
+            successDiv.classList.remove('success');
+            successDiv.style.display = 'none';
+
+            if (!email) {
+                errorDiv.innerHTML = 'Email is required';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                errorDiv.innerHTML = 'Please enter a valid email address';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span>Sending...';
+
+            try {
+                const res = await Auth.requestSignupVerification(email);
+
+                if (res.success) {
+                    // Move to step 2
+                    document.getElementById('step1').classList.remove('show');
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('step2').classList.remove('hidden');
+                    document.getElementById('step2').classList.add('show');
+                    
+                    // Update progress indicator
+                    document.getElementById('dot1').classList.remove('active');
+                    document.getElementById('dot1').classList.add('completed');
+                    document.getElementById('dot2').classList.add('active');
+                    
+                    currentStep = 2;
+                    startCooldown(60);
+                } else {
+                    errorDiv.innerHTML = res.message || 'Failed to send verification code';
+                    errorDiv.classList.add('error');
+                    errorDiv.style.display = 'block';
+                    btn.disabled = false;
+                    btnText.textContent = 'Send Verification Code';
+                }
+            } catch (error) {
+                errorDiv.innerHTML = 'An error occurred. Please try again.';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                btn.disabled = false;
+                btnText.textContent = 'Send Verification Code';
+            }
+        }
+
+        function startCooldown(seconds) {
+            const resendBtn = document.getElementById('resendBtn');
+            resendBtn.disabled = true;
+            let remaining = seconds;
+
+            resendBtn.textContent = `Resend in ${remaining}s`;
+
+            cooldownTimer = setInterval(() => {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(cooldownTimer);
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = 'Resend Code';
+                } else {
+                    resendBtn.textContent = `Resend in ${remaining}s`;
+                }
+            }, 1000);
+        }
+
+        // Resend code
+        document.getElementById('resendBtn').addEventListener('click', async function() {
+            const email = document.getElementById('email').value;
+            const errorDiv = document.getElementById('errorMsg');
+            
+            this.disabled = true;
+            this.textContent = 'Sending...';
+
+            try {
+                const res = await Auth.requestSignupVerification(email);
+                
+                if (res.success) {
+                    startCooldown(60);
+                    errorDiv.classList.remove('error');
+                    errorDiv.style.display = 'none';
+                } else {
+                    errorDiv.innerHTML = res.message || 'Failed to resend code';
+                    errorDiv.classList.add('error');
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.innerHTML = 'An error occurred. Please try again.';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+            }
+        });
+
+        document.getElementById('btn-request').addEventListener('click', requestSignup);
+
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const code = document.getElementById('code').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('errorMsg');
+            const successDiv = document.getElementById('successMsg');
+            const submitBtn = document.querySelector('#step2 .auth-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+
+            // Clear previous messages
+            errorDiv.classList.remove('error');
+            errorDiv.style.display = 'none';
+            successDiv.classList.remove('success');
+            successDiv.style.display = 'none';
+
+            // Validation
+            if (!code || code.length !== 6) {
+                errorDiv.innerHTML = 'Please enter the 6-digit verification code';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (!password || password.length < 6) {
+                errorDiv.innerHTML = 'Password must be at least 6 characters';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorDiv.innerHTML = 'Passwords do not match';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span>Creating Account...';
+
+            try {
+                const result = await Auth.completeSignup(code, password);
+
+                if (result.success) {
+                    successDiv.innerHTML = 'Account created successfully! Redirecting to login...';
+                    successDiv.classList.add('success');
+                    successDiv.style.display = 'block';
+                    
+                    // Update progress indicator to show completion
+                    document.getElementById('dot2').classList.remove('active');
+                    document.getElementById('dot2').classList.add('completed');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    errorDiv.innerHTML = result.message || 'Failed to complete signup';
+                    errorDiv.classList.add('error');
+                    errorDiv.style.display = 'block';
+                    submitBtn.disabled = false;
+                    btnText.textContent = 'Complete Signup';
+                }
+            } catch (error) {
+                errorDiv.innerHTML = 'An error occurred. Please try again.';
+                errorDiv.classList.add('error');
+                errorDiv.style.display = 'block';
+                submitBtn.disabled = false;
+                btnText.textContent = 'Complete Signup';
+            }
+        });
+
+        // Allow Enter key to trigger actions
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                requestSignup();
+            }
+        });
+    </script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="chatbot.js"></script>
+</body>
+
+</html>

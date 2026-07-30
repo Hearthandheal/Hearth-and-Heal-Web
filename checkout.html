@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearth and Heal | Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="styles-premium.css">
+    <meta name="p:domain_verify" content="9f14e2fe9ee4fc0edf7d136a1885755e" />
+
+        <style>
+        /* Dark Theme Overrides */
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            background-color: #0a0a0a !important;
+            color: #ffffff !important;
+        }
+
+        .checkout-card {
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            background-color: #111111 !important;
+            border: 1px solid #222222 !important;
+            color: #ffffff !important;
+        }
+
+        .checkout-card h3 {
+            font-family: "Outfit", sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff !important;
+        }
+
+        .checkout-card label {
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.01em;
+            color: #cccccc !important;
+        }
+
+        .checkout-card input,
+        .checkout-card textarea {
+            font-family: "Inter", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            letter-spacing: -0.005em;
+            background-color: #1a1a1a !important;
+            border: 1px solid #333333 !important;
+            color: #ffffff !important;
+        }
+
+        .checkout-card input:focus,
+        .checkout-card textarea:focus {
+            border-color: #39ff14 !important;
+            outline: none;
+        }
+
+        .checkout-card input::placeholder,
+        .checkout-card textarea::placeholder {
+            color: #666666 !important;
+        }
+
+        .payment-tabs {
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #1a1a1a !important;
+            border: 1px solid #333333 !important;
+        }
+
+        .payment-tab {
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            padding: 12px 20px;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.01em;
+            background-color: #1a1a1a !important;
+            color: #cccccc !important;
+        }
+
+        .payment-tab.active {
+            box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
+            background-color: #222222 !important;
+            color: #39ff14 !important;
+            border-bottom: 2px solid #39ff14 !important;
+        }
+
+        .payment-tab:hover {
+            background-color: #222222 !important;
+        }
+
+        .bank-box {
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-family: "Inter", sans-serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            background-color: #1a1a1a !important;
+            border: 1px solid #333333 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-primary,
+        .btn-whatsapp-order {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-whatsapp-order {
+            font-family: "Outfit", sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            background-color: #39ff14 !important;
+            color: #0a0a0a !important;
+            border: none !important;
+        }
+
+        .btn-primary:hover,
+        .btn-whatsapp-order:hover {
+            box-shadow: 0 4px 16px rgba(57, 255, 20, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp-order:hover {
+            background-color: #2ed411 !important;
+        }
+
+        .cart-total-row {
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #ffffff !important;
+        }
+
+        .total-price {
+            font-family: "Outfit", sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.01em;
+            color: #39ff14 !important;
+        }
+
+        .cart-items-list p {
+            color: #666666 !important;
+        }
+
+        .divider {
+            border-color: #333333 !important;
+        }
+
+        #btn-stk-push {
+            background: linear-gradient(135deg, #39ff14 0%, #2ed411 100%) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 16px 32px !important;
+            font-family: "Outfit", sans-serif !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 0.01em !important;
+            text-transform: uppercase !important;
+            box-shadow: 0 4px 16px rgba(57, 255, 20, 0.3) !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            line-height: 1.2 !important;
+            text-align: center !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        #btn-stk-push:hover {
+            background: linear-gradient(135deg, #2ed411 0%, #25b80e 100%) !important;
+            box-shadow: 0 6px 20px rgba(57, 255, 20, 0.5) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        #btn-stk-push:active {
+            transform: translateY(0) !important;
+            box-shadow: 0 2px 8px rgba(57, 255, 20, 0.3) !important;
+        }
+
+        #btn-complete-order {
+            background: linear-gradient(135deg, #39ff14 0%, #2ed411 100%) !important;
+            color: #0a0a0a !important;
+            border: none !important;
+            border-radius: 12px !important;
+            padding: 18px 32px !important;
+            font-family: "Outfit", sans-serif !important;
+            font-weight: 700 !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 0.01em !important;
+            text-transform: uppercase !important;
+            box-shadow: 0 6px 20px rgba(57, 255, 20, 0.4) !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            line-height: 1.2 !important;
+            text-align: center !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        #btn-complete-order:hover {
+            background: linear-gradient(135deg, #2ed411 0%, #25b80e 100%) !important;
+            box-shadow: 0 8px 24px rgba(57, 255, 20, 0.6) !important;
+            transform: translateY(-3px) !important;
+        }
+
+        #btn-complete-order:active {
+            transform: translateY(0) !important;
+            box-shadow: 0 4px 12px rgba(57, 255, 20, 0.4) !important;
+        }
+
+        #stk-status {
+            background-color: #0d5c3b !important;
+            border: 2px solid #39ff14 !important;
+            border-radius: 8px !important;
+            padding: 16px 20px !important;
+            margin-top: 16px !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 16px rgba(57, 255, 20, 0.3) !important;
+        }
+
+        #stk-status-text {
+            color: #ffffff !important;
+            font-weight: 500 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hearth and Heal Logo">
+            </a>
+            <div class="mobile-menu-btn">
+                <i data-feather="menu"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="shop.html" class="nav-link">Back to Shop</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="checkout section-padding">
+        <div class="container">
+            <h1 style="text-align: center; margin-bottom: 3rem;">Secure Checkout</h1>
+
+            <div class="checkout-grid">
+                <!-- Left Column: Order Summary & Details -->
+                <div class="checkout-form-col">
+
+                    <!-- Cart Summary -->
+                    <div class="checkout-card mb-2">
+                        <h3>Order Summary</h3>
+                        <div id="checkout-cart-items" class="cart-items-list">
+                            <!-- Items inserted via JS -->
+                            <p style="color: #666; font-style: italic;">Your cart is empty.</p>
+                        </div>
+                        <div class="cart-total-row">
+                            <span>Total</span>
+                            <span id="checkout-total" class="total-price">$0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Details -->
+                    <div class="checkout-card">
+                        <h3>Delivery Information</h3>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="cust-name" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number (WhatsApp)</label>
+                            <input type="tel" id="cust-phone" placeholder="2547XXXXXXXX" pattern="2547[0-9]{8}" minlength="12" maxlength="12">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="cust-email" placeholder="john@example.com">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>City/Town</label>
+                                <input type="text" id="cust-city" placeholder="e.g., Nairobi">
+                            </div>
+                            <div class="form-group">
+                                <label>Estate/Street</label>
+                                <input type="text" id="cust-street" placeholder="e.g., Westlands">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Instructions (Optional)</label>
+                            <textarea id="cust-notes" rows="2"
+                                placeholder="Any specific details for the rider..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Payment -->
+                <div class="payment-col">
+                    <div class="checkout-card payment-card">
+                        <h3>Payment Method</h3>
+                        <p class="mb-2" style="color: #666; font-size: 0.9rem;">
+                            Please complete payment using one of the methods below, then enter the Transaction Code to
+                            confirm your order.
+                        </p>
+
+                        <!-- Payment Tabs -->
+                        <div class="payment-tabs">
+                            <button class="payment-tab active" data-method="mpesa">
+                                <span style="font-weight: bold; color: #25D366;">M-Pesa</span>
+                            </button>
+                            <button class="payment-tab" data-method="bank">
+                                Bank Transfer
+                            </button>
+                        </div>
+
+                        <!-- M-Pesa Details -->
+                        <div id="mpesa-details" class="payment-details active">
+                            <div class="form-group">
+                                <label>M-Pesa Phone Number</label>
+                                <input type="tel" id="mpesa-phone" placeholder="2547XXXXXXXX" pattern="2547[0-9]{8}" minlength="12" maxlength="12" value="">
+                                <small style="color: #666;">Enter the number in 2547XXXXXXXX format to receive the payment prompt (STK Push).</small>
+                                <button id="btn-stk-push" class="btn-primary mt-1"
+                                    style="width: 100%; height: 40px; font-size: 0.9rem;">
+                                    <i data-feather="smartphone"></i> Send Payment Prompt
+                                </button>
+                                <input type="hidden" id="mpesa-invoice-ref" value="">
+                                <div id="mpesa-invoice-note" style="margin-top: 0.75rem; font-size: 0.85rem; color: #666; display: none;"></div>
+                                <div id="stk-status" style="margin-top: 0.5rem; font-size: 0.85rem; display: none; background-color: #0d5c3b; padding: 12px; border-radius: 8px; border: 2px solid #39ff14; color: #ffffff;">
+                                    <span class="status-spinner"></span> <span id="stk-status-text">Sending
+                                        prompt...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Details -->
+                        <div id="bank-details" class="payment-details">
+                            <div class="bank-box">
+                                <p><strong>kcb Bank</strong></p>
+                                <p>Acc: 114433429</p>
+                                <p>Branch: Nairobi</p>
+                            </div>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- Verification -->
+                        <div class="form-group mt-2">
+                            <label>Transaction Code / Reference ID</label>
+                            <input type="text" id="payment-code" placeholder="e.g., QKH1234567"
+                                style="border-color: var(--color-primary); background: #f0fff4;">
+                        </div>
+
+                        <button id="btn-complete-order" class="btn-whatsapp-order mt-2">
+                            <i data-feather="lock"></i> Confirm & Send Order
+                        </button>
+                        <p style="text-align: center; font-size: 0.8rem; color: #888; margin-top: 1rem;">
+                            This will open WhatsApp with your verified order details.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>feather.replace();</script>
+    <script src="auth.js"></script>
+    <script src="shop.js"></script>
+    <script src="hero-slideshow.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+{
+  "name": "hearth-and-heal-backend",
+  "version": "1.0.0",
+  "description": "Payment backend for Hearth and Heal",
+  "main": "app.js",
+  "license": "ISC",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.0.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "express-rate-limit": "^7.4.0",
+    "express-session": "^1.19.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.24.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pg": "^8.11.5",
+    "winston": "^3.13.0"
+  }
+}

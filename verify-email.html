@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - Hearth and Heal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="styles-premium.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(0, 230, 118, 0.05) 0%, #050505 70%);
+        }
+
+        .auth-card {
+            background: var(--color-surface);
+            padding: 3rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .auth-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .error-msg {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Email Verified</h1>
+                <p>Set a password to complete your account setup.</p>
+            </div>
+
+            <form id="verifyForm">
+                <input type="hidden" id="ref">
+                <input type="hidden" id="token">
+
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <input type="password" id="password" placeholder="Min. 6 characters" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary auth-btn">Create Account</button>
+                <div id="errorMsg" class="error-msg"></div>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Extract params
+        const urlParams = new URLSearchParams(window.location.search);
+        const ref = urlParams.get('ref');
+        const token = urlParams.get('token');
+
+        if (!ref || !token) {
+            document.getElementById('errorMsg').innerText = "Invalid or missing verification link.";
+            document.getElementById('errorMsg').style.display = 'block';
+            document.querySelector('button').disabled = true;
+        } else {
+            document.getElementById('ref').value = ref;
+            document.getElementById('token').value = token;
+        }
+
+        document.getElementById('verifyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('errorMsg');
+
+            if (password !== confirmPassword) {
+                errorDiv.innerText = "Passwords do not match";
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorDiv.innerText = "Password too short";
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Use the new token + ref to verify
+            const result = await Auth.verifyEmailLink(ref, token, password);
+
+            if (result.success) {
+                alert("Account created successfully! Please log in.");
+                window.location.href = 'login.html';
+            } else {
+                errorDiv.innerText = result.message;
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="chatbot.js"></script>
+</body>
+
+</html>

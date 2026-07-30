@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearth and Heal | Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="styles-premium.css">
+    <meta name="p:domain_verify" content="9f14e2fe9ee4fc0edf7d136a1885755e" />
+    <!-- Auth Protection -->
+    <script src="auth.js"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hearth and Heal Logo">
+            </a>
+            <div class="mobile-menu-btn">
+                <i data-feather="menu"></i>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="mission.html" class="nav-link">Our Mission</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="shop.html" class="nav-link" style="color: var(--color-primary-dark);">Shop</a>
+                <li><a href="login.html" class="nav-link" id="auth-link">Login</a></li>
+                <li><a href="donate.html" class="btn btn-primary">Donate</a></li>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Shop Hero -->
+    <section class="shop-hero">
+        <div class="container parallax" data-speed="0.3">
+            <h1 class="animate-on-scroll">Support Our <span style="color: var(--color-primary);">Mission</span></h1>
+            <p class="animate-on-scroll" style="max-width: 600px; margin: 0 auto; color: #666;">
+                Every purchase directly contributes to our mental health programs and community outreach. Wear the
+                message, spread the hope.
+            </p>
+        </div>
+    </section>
+
+    <!-- Shop Grid -->
+    <section class="shop section-padding">
+        <div class="container">
+            <div class="shop-grid">
+
+                <!-- Product 1: The Book -->
+                <div class="product-card animate-on-scroll" data-category="book"
+                    data-specs="Author: John Haggee | Pages: 240 | Genre: Non-Fiction / Self-Help | Language: English"
+                    data-description="I Chose To Let You Down is a personal journey of despair, loss, and rediscovery. It's not about pointing fingers; it's about making sense of the silence, distance, and unanswered questions that remain when those you trusted choose to walk away.">
+                    <div class="product-img">
+                        <img src="assets/book_cover.png" alt="I Chose To Let You Down Book Cover"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">I Chose To Let You Down</h3>
+                        <p class="product-type">Book by John Haggee</p>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">"You don't get to choose being
+                            broken, it's a choice to remain broken."</p>
+                        <span class="product-price">KSH 1000</span>
+                    </div>
+                </div>
+
+                <!-- Product 2: Hoodie -->
+                <div class="product-card animate-on-scroll" data-category="apparel" data-colors="Black, White"
+                    data-img-black="assets/uploaded_image_0_1767341358319.png"
+                    data-img-white="assets/uploaded_image_1_1767340485084.png"
+                    data-specs="Material: 80% Cotton, 20% Polyester | Fit: Unisex Relaxed Fit | Care: Machine Wash Cold"
+                    data-description="Official Branded Hearth & Heal Hoodie. Premium cotton blend, comfortable, warm, and perfect for carrying our message of hope. Available in both Black and White.">
+                    <div class="product-img">
+                        <img src="assets/uploaded_image_0_1767341358319.png" alt="Branded Hoodie"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded Hoodie</h3>
+                        <p class="product-type">Apparel</p>
+                        <span class="product-price">KSH 2500</span>
+                    </div>
+                </div>
+
+                <!-- Product 3: Sweatshirt -->
+                <div class="product-card animate-on-scroll" data-category="apparel" data-colors="Black, White"
+                    data-img-black="assets/uploaded_image_0_1767341569950.png"
+                    data-img-white="assets/uploaded_image_1_1767341569950.png"
+                    data-specs="Material: Soft Fleece Blend | Fit: Regular Fit | Details: Embroidered Logo"
+                    data-description="Official Branded Crewneck Sweatshirt. Soft fleece lining with the H&H logo embroidered on the chest. Stylish and cozy. Available in both Black and White.">
+                    <div class="product-img">
+                        <img src="assets/uploaded_image_0_1767341569950.png" alt="Branded Sweatshirt"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded Sweatshirt</h3>
+                        <p class="product-type">Apparel</p>
+                        <span class="product-price">KSH 2000</span>
+                    </div>
+                </div>
+
+                <!-- Product 4: T-Shirt -->
+                <div class="product-card animate-on-scroll" data-category="apparel" data-colors="Black, White"
+                    data-img-black="assets/uploaded_image_0_1767340485084.png"
+                    data-img-white="assets/uploaded_image_2_1767340485084.png"
+                    data-specs="Material: 100% Premium Cotton | Fit: Regular Fit | Style: Screen Printed Logo"
+                    data-description="Official Hearth & Heal Branded T-Shirt. Lightweight and breathable cotton, perfect for everyday advocacy. Choose between classic Black or crisp White.">
+                    <div class="product-img">
+                        <img src="assets/uploaded_image_0_1767340485084.png" alt="Branded T-Shirt"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded T-Shirt</h3>
+                        <p class="product-type">Apparel</p>
+                        <span class="product-price">KSH 750</span>
+                    </div>
+                </div>
+
+                <!-- Product 5: Polo -->
+                <div class="product-card animate-on-scroll" data-category="apparel" data-colors="Black, White"
+                    data-img-black="assets/uploaded_image_1_1767341358319.png"
+                    data-img-white="assets/uploaded_image_3_1767341358319.png"
+                    data-specs="Material: 100% Cotton Pique | Fit: Classic Fit | Collar: Ribbed Knit"
+                    data-description="Official Branded Premium Polo Shirt. breathable fabric/cotton pique with embroidered logo. Available in both Black and White.">
+                    <div class="product-img">
+                        <img src="assets/uploaded_image_3_1767341358319.png" alt="Branded Polo Shirt"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded Polo Shirt</h3>
+                        <p class="product-type">Apparel</p>
+                        <span class="product-price">KSH 1000</span>
+                    </div>
+                </div>
+
+                <!-- Product 6: Scarf -->
+                <div class="product-card animate-on-scroll" data-category="accessories" data-colors="Black, White"
+                    data-specs="Material: 100% Acrylic Knit | Size: One Size Fits All"
+                    data-description="Official Branded H&H Scarf. Warm, knitted scarf with our signature colors. A perfect accessory for the cold seasons. Available in both Black and White.">
+                    <div class="product-img">
+                        <i data-feather="wind"></i>
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded Scarf</h3>
+                        <p class="product-type">Accessories</p>
+                        <span class="product-price">KSH 600</span>
+                    </div>
+                </div>
+
+                <!-- Product 7: Cap -->
+                <div class="product-card animate-on-scroll" data-category="accessories" data-colors="Black, White"
+                    data-img-black="assets/uploaded_image_4_1767340485084.png"
+                    data-img-white="assets/uploaded_image_3_1767340485084.png"
+                    data-specs="Material: Cotton Twill | Fit: Adjustable Strap | Style: 6-Panel Dad Hat"
+                    data-description="Official Branded Baseball Cap. Adjustable strap, durable fabric, identifying you as part of the H&H community. Available in Black and White.">
+                    <div class="product-img">
+                        <img src="assets/uploaded_image_4_1767340485084.png" alt="Branded Cap"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded Cap</h3>
+                        <p class="product-type">Accessories</p>
+                        <span class="product-price">KSH 500</span>
+                    </div>
+                </div>
+
+                <!-- Product 8: Headband -->
+                <div class="product-card animate-on-scroll" data-category="accessories" data-colors="Black, White"
+                    data-img-black="assets/uploaded_image_2_1767341358319.png"
+                    data-img-white="assets/uploaded_image_4_1767341358319.png"
+                    data-specs="Material: Elastic Comfort Blend | Size: One Size Fits All"
+                    data-description="Official Hearth & Heal Branded Headband. Comfortable and stylish, perfect for active days or focused sessions. Available in both Black and White.">
+                    <div class="product-img">
+                        <img src="assets/uploaded_image_2_1767341358319.png" alt="Branded Headband"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="product-actions">
+                            <button class="btn-quick-view" aria-label="Quick View"><i data-feather="eye"></i></button>
+                            <button class="btn-add-cart" aria-label="Add to Cart"><i
+                                    data-feather="shopping-cart"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">Branded Headband</h3>
+                        <p class="product-type">Accessories</p>
+                        <span class="product-price">KSH 500</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">Hearth & Heal</a>
+                    <p class="footer-bio">
+                        A safe haven for healing, growth, and restoration. We are dedicated to providing the resources
+                        and community support needed to navigate life's challenges.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <nav class="footer-links">
+                        <a href="mission.html">Our Mission</a>
+                        <a href="services.html">Services</a>
+                        <a href="shop.html">Shop</a>
+                        <a href="contact.html">Contact</a>
+                    </nav>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect with Us</h4>
+                    <div class="social-links">
+                        <!-- TikTok -->
+                        <a href="https://www.tiktok.com/@hearth.heal.org" class="social-icon" aria-label="TikTok"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                            </svg>
+                        </a>
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/hearthandhealorg/" class="social-icon" aria-label="Instagram"
+                            target="_blank" rel="noopener noreferrer">
+                            <i data-feather="instagram"></i>
+                        </a>
+                        <!-- X (Twitter) -->
+                        <a href="https://twitter.com/hearthandhealorg" class="social-icon" aria-label="X (Twitter)"
+                            target="_blank" rel="noopener noreferrer">
+                            <i data-feather="twitter"></i>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://facebook.com/hearthandhealorg" class="social-icon" aria-label="Facebook"
+                            target="_blank" rel="noopener noreferrer">
+                            <i data-feather="facebook"></i>
+                        </a>
+                        <!-- Pinterest -->
+                        <a href="https://pinterest.com/hearthandhealorg" class="social-icon" aria-label="Pinterest"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg> <!-- Placeholder for Pinterest Generic -->
+                        </a>
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/254114433429" class="social-icon" aria-label="WhatsApp" target="_blank"
+                            rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                                </path>
+                            </svg>
+                        </a>
+                        <!-- YouTube -->
+                        <a href="https://www.youtube.com/@hearthandheal" class="social-icon" aria-label="YouTube"
+                            target="_blank" rel="noopener noreferrer">
+                            <i data-feather="youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Hearth and Heal. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="product-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-left">
+                <img id="modal-img" src="" alt="Product Image">
+            </div>
+            <div class="modal-right">
+                <h2 id="modal-title">Product Title</h2>
+                <div id="modal-price" class="modal-price">$0.00</div>
+                <div id="modal-desc" style="color: #666; line-height: 1.6; margin-bottom: 2rem;">
+                    Description goes here.
+                </div>
+
+                <div class="modal-options">
+                    <div class="option-group" id="modal-color-group">
+                        <label for="modal-color">Color</label>
+                        <select id="modal-color">
+                            <option value="Black">Black</option>
+                            <option value="White">White</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="modal-size">Size</label>
+                        <select id="modal-size">
+                            <option value="S">Small</option>
+                            <option value="M" selected>Medium</option>
+                            <option value="L">Large</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="modal-qty">Quantity</label>
+                        <input type="number" id="modal-qty" value="1" min="1" max="10">
+                    </div>
+                </div>
+
+                <div class="modal-actions" style="display: flex; gap: 10px; margin-top: 2rem;">
+                    <button id="modal-add-cart-btn" class="btn-primary" style="flex: 1; border-radius: 8px;">
+                        Add to Cart
+                    </button>
+                    <a href="#" id="modal-whatsapp-btn" class="btn-whatsapp-order" target="_blank"
+                        style="flex: 1.5; margin-bottom: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-message-circle">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg>
+                        Instant Order
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        feather.replace();
+
+        // Reveal Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+    </script>
+    <script src="auth.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="shop.js"></script>
+    <script src="hero-slideshow.js"></script>
+</body>
+
+</html>

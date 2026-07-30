@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0a0a0a;
+overflow:hidden;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+background:linear-gradient(135deg,#00f5ff,#0066ff);
+filter:blur(150px);
+opacity:.15;
+top:-100px;
+left:-100px;
+}
+
+body::after{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+background:linear-gradient(135deg,#ff00d4,#ff6a00);
+filter:blur(150px);
+opacity:.12;
+bottom:-100px;
+right:-100px;
+}
+
+.card{
+width:460px;
+padding:45px;
+border-radius:30px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.1);
+box-shadow:0 20px 80px rgba(0,0,0,.45);
+position:relative;
+z-index:2;
+}
+
+.logo{
+font-size:30px;
+font-weight:700;
+color:white;
+text-align:center;
+margin-bottom:10px;
+}
+
+.subtitle{
+color:#9a9a9a;
+text-align:center;
+margin-bottom:35px;
+}
+
+.input-group{
+margin-bottom:18px;
+}
+
+.input-group input{
+width:100%;
+padding:16px 18px;
+border:none;
+outline:none;
+border-radius:14px;
+background:rgba(255,255,255,.06);
+color:white;
+font-size:15px;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.input-group input:focus{
+border-color:#00d9ff;
+box-shadow:0 0 20px rgba(0,217,255,.2);
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+background:linear-gradient(135deg,#00d9ff,#0066ff);
+color:white;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-2px);
+}
+
+.divider{
+margin:25px 0;
+display:flex;
+align-items:center;
+color:#888;
+font-size:13px;
+}
+
+.divider::before,
+.divider::after{
+content:"";
+flex:1;
+height:1px;
+background:#2a2a2a;
+}
+
+.divider span{
+padding:0 12px;
+}
+
+.social{
+display:flex;
+gap:12px;
+}
+
+.social button{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.footer{
+margin-top:25px;
+text-align:center;
+color:#999;
+font-size:14px;
+}
+
+.footer a{
+color:#00d9ff;
+text-decoration:none;
+}
+
+.message {
+margin-top:16px;
+padding:14px 16px;
+border-radius:14px;
+font-size:14px;
+}
+
+.message.error{
+background:rgba(255,68,68,.12);
+color:#ffb3b3;
+border:1px solid rgba(255,68,68,.2);
+}
+
+.message.success{
+background:rgba(0,217,255,.12);
+color:#cceeff;
+border:1px solid rgba(0,217,255,.2);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">
+Create Account
+</div>
+
+<div class="subtitle">
+Join and start your experience
+</div>
+
+<form id="registerForm">
+
+<div class="input-group">
+<input
+type="text"
+id="fullName"
+placeholder="Full Name"
+required>
+</div>
+
+<div class="input-group">
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+required>
+</div>
+
+<div class="input-group">
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
+</div>
+
+<div class="input-group">
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password"
+required>
+</div>
+
+<button type="submit">
+Create Account
+</button>
+
+<div id="formMessage" class="message" style="display:none;"></div>
+
+</form>
+
+<div class="divider">
+<span>OR</span>
+</div>
+
+<div class="social">
+<button type="button">Google</button>
+<button type="button">Facebook</button>
+</div>
+
+<div class="footer">
+Already have an account?
+<a href="login.html">Login</a>
+</div>
+
+</div>
+
+<script>
+const form = document.getElementById("registerForm");
+const messageBox = document.getElementById("formMessage");
+
+function showMessage(text, type = "error") {
+  messageBox.textContent = text;
+  messageBox.className = `message ${type}`;
+  messageBox.style.display = "block";
+}
+
+function hideMessage() {
+  messageBox.style.display = "none";
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  hideMessage();
+
+  const fullName = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (!fullName || !email || !password || !confirmPassword) {
+    showMessage("Please complete all fields.", "error");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  if (password.length < 6) {
+    showMessage("Password must be at least 6 characters.", "error");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fullName,
+        email,
+        password
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      showMessage(data.error || data.message || "Registration failed.", "error");
+      return;
+    }
+
+    showMessage(data.message || "Account created successfully!", "success");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1800);
+  } catch (error) {
+    showMessage("Registration failed. Please try again.", "error");
+  }
+});
+</script>
+
+</body>
+</html>

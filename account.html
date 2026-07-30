@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearth and Heal | Account</title>
+    <meta name="description" content="Manage your profile, security, appearance, and preferences.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+    <link rel="stylesheet" href="styles-premium.css">
+    <link rel="stylesheet" href="account.css">
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="auth.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="Hearth & Heal Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="mission.html" class="nav-link">Our Mission</a></li>
+                    <li><a href="services.html" class="nav-link">Our Services</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li><a href="cart.html" class="nav-link">Cart</a></li>
+                    <li><a href="contact.html" class="nav-link">Get Involved</a></li>
+                    <li><a href="account.html" class="nav-link active" id="auth-link">Account</a></li>
+                    <li><a href="donate.html" class="btn btn-primary">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i data-feather="menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 100px;">
+        <div class="account-shell">
+            <div class="account-grid">
+                <aside class="acct-sidebar">
+                    <div class="acct-user">
+                        <div id="acct-avatar-slot" class="acct-avatar-wrap"></div>
+                        <h2 id="sidebar-name">Loading…</h2>
+                        <p id="sidebar-email">…</p>
+                    </div>
+                    <nav class="acct-nav">
+                        <button type="button" class="acct-nav-item" data-target="overview-section"><i
+                                data-feather="home"></i> Overview</button>
+                        <button type="button" class="acct-nav-item" data-target="profile-section"><i
+                                data-feather="user"></i> Profile &amp; photo</button>
+                        <button type="button" class="acct-nav-item" data-target="appearance-section"><i
+                                data-feather="droplet"></i> Appearance</button>
+                        <button type="button" class="acct-nav-item" data-target="notifications-section"><i
+                                data-feather="bell"></i> Notifications</button>
+                        <button type="button" class="acct-nav-item" data-target="privacy-section"><i
+                                data-feather="lock"></i> Privacy</button>
+                        <button type="button" class="acct-nav-item" data-target="security-section"><i
+                                data-feather="shield"></i> Security</button>
+                        <button type="button" class="acct-nav-item" data-target="orders-section"><i
+                                data-feather="shopping-bag"></i> Orders &amp; cart</button>
+                        <button type="button" class="acct-nav-logout" onclick="Auth.logout()"><i
+                                data-feather="log-out"></i> Sign out</button>
+                    </nav>
+                </aside>
+
+                <div class="acct-main">
+
+                    <section id="overview-section" class="acct-section active">
+                        <div class="acct-panel">
+                            <h1>Welcome back</h1>
+                            <p class="acct-lead">Manage your profile, how the site looks, and how we reach you—all in
+                                one place.</p>
+                            <div class="acct-stats">
+                                <div class="acct-stat">
+                                    <div class="num" id="dashboard-orders-count">0</div>
+                                    <div class="lbl">Orders (coming soon)</div>
+                                </div>
+                                <div class="acct-stat">
+                                    <div class="num">✓</div>
+                                    <div class="lbl">Verified member</div>
+                                </div>
+                                <div class="acct-stat">
+                                    <div class="num" id="dash-cart-count">0</div>
+                                    <div class="lbl">Items in cart</div>
+                                </div>
+                            </div>
+                            <div class="acct-actions">
+                                <a href="shop.html" class="btn btn-primary"><i data-feather="shopping-cart"></i> Continue
+                                    shopping</a>
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="switchTab('profile-section', event)"><i data-feather="edit-2"></i> Edit
+                                    profile</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="profile-section" class="acct-section">
+                        <div class="acct-panel">
+                            <h1>Profile &amp; photo</h1>
+                            <p class="acct-lead">Your name and contact details are stored securely. Profile photos are
+                                limited to 2&nbsp;MB (JPEG, PNG, WebP, or GIF).</p>
+
+                            <div class="acct-upload">
+                                <label class="acct-label">Profile photo</label>
+                                <div class="acct-dropzone" id="avatar-dropzone">
+                                    <i data-feather="upload-cloud"></i>
+                                    <span>Drop an image here or click to browse</span>
+                                </div>
+                                <input type="file" id="avatar-input" accept="image/jpeg,image/png,image/webp,image/gif">
+                            </div>
+
+                            <form id="profile-form" class="acct-form-grid" style="margin-top:1.5rem">
+                                <div>
+                                    <label class="acct-label" for="profile-email">Email</label>
+                                    <input class="acct-input" type="email" id="profile-email" disabled>
+                                    <p class="acct-hint">Email is your sign-in identity and cannot be changed here.</p>
+                                </div>
+                                <div>
+                                    <label class="acct-label" for="profile-name">Full name</label>
+                                    <input class="acct-input" type="text" id="profile-name" required maxlength="120"
+                                        autocomplete="name">
+                                </div>
+                                <div>
+                                    <label class="acct-label" for="profile-phone">Phone (optional)</label>
+                                    <input class="acct-input" type="tel" id="profile-phone" maxlength="40"
+                                        autocomplete="tel">
+                                </div>
+                                <div style="grid-column: 1 / -1;">
+                                    <label class="acct-label" for="profile-bio">Bio (optional)</label>
+                                    <textarea class="acct-textarea" id="profile-bio" maxlength="2000"
+                                        placeholder="A short line about you or why you support Hearth & Heal…"></textarea>
+                                </div>
+                                <div class="acct-actions" style="grid-column: 1 / -1;">
+                                    <button type="submit" class="btn btn-primary">Save profile</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section id="appearance-section" class="acct-section">
+                        <div class="acct-panel">
+                            <h1>Appearance</h1>
+                            <p class="acct-lead">Choose a theme for the site. Your choice is remembered on this device
+                                and synced to your account when you’re online.</p>
+
+                            <h3>Color mode</h3>
+                            <div class="theme-grid mode-grid">
+                                <div class="theme-card mode-card" data-mode="light" role="button" tabindex="0">
+                                    <div class="swatch swatch-light"></div>
+                                    <span>Light mode</span>
+                                </div>
+                                <div class="theme-card mode-card" data-mode="dark" role="button" tabindex="0">
+                                    <div class="swatch swatch-dark"></div>
+                                    <span>Dark mode</span>
+                                </div>
+                            </div>
+
+                            <h3>Color theme</h3>
+                            <div class="theme-grid">
+                                <div class="theme-card" data-theme="default" role="button" tabindex="0">
+                                    <div class="swatch swatch-default"></div>
+                                    <span>Default</span>
+                                </div>
+                                <div class="theme-card" data-theme="emerald" role="button" tabindex="0">
+                                    <div class="swatch swatch-emerald"></div>
+                                    <span>Emerald</span>
+                                </div>
+                                <div class="theme-card" data-theme="warm" role="button" tabindex="0">
+                                    <div class="swatch swatch-warm"></div>
+                                    <span>Warm</span>
+                                </div>
+                                <div class="theme-card" data-theme="midnight" role="button" tabindex="0">
+                                    <div class="swatch swatch-midnight"></div>
+                                    <span>Midnight</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="notifications-section" class="acct-section">
+                        <div class="acct-panel">
+                            <h1>Notifications</h1>
+                            <p class="acct-lead">Control what you want to hear about. (Delivery depends on product
+                                roadmap; preferences are stored on your account.)</p>
+
+                            <div class="acct-toggle-row">
+                                <div>
+                                    <h4>Mission &amp; events</h4>
+                                    <p>Occasional updates about programs and gatherings.</p>
+                                </div>
+                                <label class="acct-switch">
+                                    <input type="checkbox" id="pref-notify-mission">
+                                    <span class="acct-slider"></span>
+                                </label>
+                            </div>
+                            <div class="acct-toggle-row">
+                                <div>
+                                    <h4>Order updates</h4>
+                                    <p>Emails about shop orders and receipts when available.</p>
+                                </div>
+                                <label class="acct-switch">
+                                    <input type="checkbox" id="pref-notify-orders">
+                                    <span class="acct-slider"></span>
+                                </label>
+                            </div>
+                            <div class="acct-toggle-row">
+                                <div>
+                                    <h4>Community &amp; impact stories</h4>
+                                    <p>Newsletters and fundraising highlights (opt-in).</p>
+                                </div>
+                                <label class="acct-switch">
+                                    <input type="checkbox" id="pref-marketing">
+                                    <span class="acct-slider"></span>
+                                </label>
+                            </div>
+                            <div class="acct-toggle-row">
+                                <div>
+                                    <h4>Compact navigation (experimental)</h4>
+                                    <p>Denser spacing in navigation areas on supported pages.</p>
+                                </div>
+                                <label class="acct-switch">
+                                    <input type="checkbox" id="pref-compact">
+                                    <span class="acct-slider"></span>
+                                </label>
+                            </div>
+                            <div class="acct-toggle-row">
+                                <div>
+                                    <h4>Usage analytics</h4>
+                                    <p>Help us understand which pages are useful (anonymous aggregates).</p>
+                                </div>
+                                <label class="acct-switch">
+                                    <input type="checkbox" id="pref-analytics">
+                                    <span class="acct-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="privacy-section" class="acct-section">
+                        <div class="acct-panel">
+                            <h1>Privacy</h1>
+                            <p class="acct-lead">We treat your account data with care.</p>
+                            <ul style="margin:0;padding-left:1.2rem;color:var(--color-text-light);line-height:1.7;font-size:0.9rem;">
+                                <li>Passwords are hashed; we never store plain text passwords.</li>
+                                <li>Profile photos are stored on our servers and served only over HTTPS in production.
+                                </li>
+                                <li>You can export or delete account data by contacting us through <a
+                                        href="contact.html" style="color:var(--color-primary)">Get Involved</a>.</li>
+                                <li>Session tokens expire; sign out on shared devices.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section id="security-section" class="acct-section">
+                        <div class="acct-panel">
+                            <h1>Security</h1>
+                            <p class="acct-lead">Use a unique password and update it if you suspect your account was
+                                exposed.</p>
+                            <form id="security-form" class="acct-form-grid">
+                                <div>
+                                    <label class="acct-label" for="current-password">Current password</label>
+                                    <input class="acct-input" type="password" id="current-password" required
+                                        autocomplete="current-password">
+                                </div>
+                                <div></div>
+                                <div>
+                                    <label class="acct-label" for="new-password">New password</label>
+                                    <input class="acct-input" type="password" id="new-password" required minlength="6"
+                                        autocomplete="new-password">
+                                </div>
+                                <div>
+                                    <label class="acct-label" for="confirm-new-password">Confirm new password</label>
+                                    <input class="acct-input" type="password" id="confirm-new-password" required
+                                        minlength="6" autocomplete="new-password">
+                                </div>
+                                <div class="acct-actions" style="grid-column: 1 / -1;">
+                                    <button type="submit" class="btn btn-primary">Update password</button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section id="orders-section" class="acct-section">
+                        <div class="acct-panel">
+                            <h1>Orders &amp; cart</h1>
+                            <p class="acct-lead">Your cart is stored on this device until checkout.</p>
+
+                            <div class="acct-cart-banner">
+                                <div>
+                                    <h3 style="margin:0 0 0.35rem;font-size:1.1rem;">Current cart</h3>
+                                    <p style="margin:0;color:var(--color-text-light);font-size:0.9rem;"
+                                        id="cart-item-count">0 items</p>
+                                </div>
+                                <div style="text-align:right;">
+                                    <p style="margin:0;font-size:1.35rem;font-weight:700;color:var(--color-primary);"
+                                        id="cart-total-display">KES 0</p>
+                                    <a href="cart.html" class="btn btn-primary" style="margin-top:0.5rem;">Open cart</a>
+                                </div>
+                            </div>
+
+                            <h3>Order history</h3>
+                            <div id="orders-list" class="acct-empty">
+                                <i data-feather="package" style="width:48px;height:48px;opacity:0.35;margin-bottom:0.5rem;"></i>
+                                <p>No completed orders linked to this account yet.</p>
+                                <a href="shop.html" class="btn btn-secondary" style="margin-top:0.75rem;">Browse shop</a>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="copyright">&copy; 2026 Hearth and Heal Organization. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+    <script src="account.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="hero-slideshow.js"></script>
+</body>
+
+</html>
