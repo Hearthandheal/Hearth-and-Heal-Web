@@ -20,35 +20,77 @@ const TeamManager = {
             name: 'Mr. John Haggee Ouma',
             role: 'Chief Executive Officer - Founder',
             bio: 'Provides overall leadership and vision. Oversees strategy, operations, and partnerships to ensure the mission of healing and growth is fulfilled with integrity and impact.',
-            image: 'assets/john_haggee_ouma.jpg' // Fallback to asset path
+            image: 'assets/john_haggee_ouma.jpg'
         },
         {
             id: '3',
-            name: 'Jane Doe',
-            role: 'Head of Spiritual Care',
-            bio: 'Dedicated to providing spiritual guidance and fostering a connection with the divine for inner peace.',
-            image: '' // No image placeholder
+            name: 'Ms. Faith Emusugut',
+            role: 'Secretary General',
+            bio: 'Oversees administration, compliance, and organizational efficiency.',
+            image: 'assets/faith_emusugut_v3.jpg'
         },
         {
             id: '4',
-            name: 'Michael Smith',
-            role: 'Program Coordinator',
-            bio: 'Passionate about organizing impactful community events that bring people together for healing.',
-            image: ''
+            name: 'Mr. Graham Ouma',
+            role: 'Publications Editor',
+            bio: 'Curates and refines our written content to ensure clarity and impact.',
+            image: 'assets/graham_ouma.png'
         },
         {
             id: '5',
-            name: 'Emmanuel K. Letoiya',
+            name: 'Ms. Angela Elijah',
+            role: 'Events Manager',
+            bio: 'Orchestrates our community gatherings and wellness workshops.',
+            image: 'assets/angela_elijah.jpg'
+        },
+        {
+            id: '6',
+            name: 'Ms. Sarah Gacoki',
+            role: 'Graphic Designer',
+            bio: 'Crafts visual assets and design materials to keep our brand vibrant and engaging.',
+            image: 'assets/sarah_gacoki.jpg'
+        },
+        {
+            id: '7',
+            name: 'Mr. Emmanuel K. Letoiya',
             role: 'External Marketing',
             bio: 'Builds partnerships and expands our reach beyond the immediate community.',
             image: 'assets/emmanuel_k_letoiya.jpg'
         },
         {
-            id: '6',
-            name: 'Angela Elijah',
-            role: 'Events Manager',
-            bio: 'Orchestrates our community gatherings and wellness workshops.',
-            image: 'assets/angela_elijah.jpg'
+            id: '8',
+            name: 'Mrs. Diana Chepkoech',
+            role: 'Social Media Manager',
+            bio: 'Connects with our digital community through inspiring content.',
+            image: 'assets/diana_chepkoech.jpg'
+        },
+        {
+            id: '9',
+            name: 'Mr. Gideon Eyinda',
+            role: 'Videographer',
+            bio: 'Captures our moments and stories through visual media.',
+            image: 'assets/gideon_eyinda.jpg'
+        },
+        {
+            id: '10',
+            name: 'Mr. Conrad Lutomia',
+            role: 'Videographer',
+            bio: 'Captures our moments and stories through visual media.',
+            image: 'assets/conrad_lutomia.jpg'
+        },
+        {
+            id: '11',
+            name: 'Ms. Gloria Otieno',
+            role: 'Communications Manager',
+            bio: 'Ensures our message is heard clearly across all channels.',
+            image: 'assets/gloria_atieno_new.png'
+        },
+        {
+            id: '12',
+            name: 'Olaf',
+            role: 'Wellness Companion',
+            bio: 'Spreads warmth and support throughout our community as Hearth & Heal’s friendly helper.',
+            image: 'assets/olaf_new.jpg'
         }
     ],
 
