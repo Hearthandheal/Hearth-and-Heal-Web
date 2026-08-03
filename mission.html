@@ -225,7 +225,7 @@
     <script>
         const renderTeamCards = () => {
             const staffContainer = document.getElementById('staff-container');
-            if (!staffContainer || !window.TeamManager) return;
+            if (!staffContainer || typeof TeamManager === 'undefined' || typeof TeamManager.getAll !== 'function') return;
 
             const members = TeamManager.getAll();
             staffContainer.innerHTML = members.map(member => `
