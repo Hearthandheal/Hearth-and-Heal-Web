@@ -130,103 +130,7 @@
         <!-- Personnel Section -->
         <section id="staff">
             <h2>👥 Meet Our Team</h2>
-            <div class="staff-container">
-
-                <!-- CEO -->
-                <div class="staff-card">
-                    <img src="assets/john_haggee_ouma.jpg" alt="Mr. John Haggee Ouma">
-                    <h3>Mr. John Haggee Ouma</h3>
-                    <p class="role">Chief Executive Officer</p>
-                    <p class="about">John leads the organization with vision and strategy, ensuring growth and impact.
-                    </p>
-                </div>
-
-                <!-- Mascot -->
-                <div class="staff-card">
-                    <img src="assets/olaf_new.jpg" alt="Olaf">
-                    <h3>Olaf</h3>
-                    <p class="role">Wellness Companion</p>
-                    <p class="about">Our friendly mascot dedicated to spreading joy and comfort to everyone.</p>
-                </div>
-
-                <!-- Secretary General -->
-                <div class="staff-card">
-                    <img src="assets/faith_emusugut_v3.jpg" alt="Faith Emusugut">
-                    <h3>Ms. Faith Emusugut</h3>
-                    <p class="role">Secretary General</p>
-                    <p class="about">Oversees administration and ensures organizational compliance and efficiency.</p>
-                </div>
-
-                <!-- Brand Ambassador -->
-                <div class="staff-card">
-                    <img src="assets/becky_waithera.png" alt="Ms. Becky Waithera">
-                    <h3>Ms. Becky Waithera</h3><p class="role">Brand Ambassador - Face of the Brand</p>
-                    <p class="about">Driving awareness and sales through product demonstrations, social media marketing, and customer engagement. Becky represents the heart and soul of Hearth & Heal.</p>
-                </div>
-
-                <!-- Publications Editor -->
-                <div class="staff-card">
-                    <img src="assets/graham_ouma.png" alt="Graham Ouma">
-                    <h3>Mr. Graham Ouma</h3>
-                    <p class="role">Publications Editor</p>
-                    <p class="about">Curates and refines our written content to ensure clarity and impact.</p>
-                </div>
-
-                <!-- Events Manager -->
-                <div class="staff-card">
-                    <img src="assets/angela_elijah.jpg" alt="Angela Elijah">
-                    <h3>Ms. Angela Elijah</h3>
-                    <p class="role">Events Manager</p>
-                    <p class="about">Orchestrates our community gatherings and wellness workshops.</p>
-                </div>
-
-                <!-- Graphic Designer -->
-                <div class="staff-card">
-                    <img src="assets/sarah_gacoki.jpg" alt="Sarah Gacoki">
-                    <h3>Ms. Sarah Gacoki</h3>
-                    <p class="role">Graphic Designer</p>
-                    <p class="about">Crafts visual assets and design materials to keep our brand vibrant and engaging.</p>
-                </div>
-
-                <!-- External Marketing -->
-                <div class="staff-card">
-                    <img src="assets/emmanuel_k_letoiya.jpg" alt="Emmanuel K. Letoiya">
-                    <h3>Mr. Emmanuel K. Letoiya</h3>
-                    <p class="role">External Marketing</p>
-                    <p class="about">Builds partnerships and expands our reach beyond the immediate community.</p>
-                </div>
-
-                <!-- Social Media Manager -->
-                <div class="staff-card">
-                    <img src="assets/diana_chepkoech.jpg" alt="Mrs. Diana Chepkoech">
-                    <h3>Mrs. Diana Chepkoech</h3>
-                    <p class="role">Social Media Manager</p>
-                    <p class="about">Connects with our digital community through inspiring content.</p>
-                </div>
-
-                <!-- Videographers -->
-                <div class="staff-card">
-                    <img src="assets/gideon_eyinda.jpg" alt="Gideon Eyinda">
-                    <h3>Mr. Gideon Eyinda</h3>
-                    <p class="role">Videographer I</p>
-                    <p class="about">Captures our moments and stories through visual media.</p>
-                </div>
-                <div class="staff-card">
-                    <img src="assets/conrad_lutomia.jpg" alt="Conrad Lutomia">
-                    <h3>Mr. Conrad Lutomia</h3>
-                    <p class="role">Videographer II</p>
-                    <p class="about">Captures our moments and stories through visual media.</p>
-                </div>
-
-                <!-- Communications Manager -->
-                <div class="staff-card">
-                    <img src="assets/gloria_atieno_new.png" alt="Gloria Atieno">
-                    <h3>Ms. Gloria Atieno</h3>
-                    <p class="role">Communications Manager</p>
-                    <p class="about">Ensures our message is heard clearly across all channels.</p>
-                </div>
-
-            </div>
+            <div id="staff-container" class="staff-container"></div>
         </section>
     </main>
 
@@ -317,6 +221,25 @@
 
 
     <!-- Scripts -->
+    <script src="team.js"></script>
+    <script>
+        const renderTeamCards = () => {
+            const staffContainer = document.getElementById('staff-container');
+            if (!staffContainer || !window.TeamManager) return;
+
+            const members = TeamManager.getAll();
+            staffContainer.innerHTML = members.map(member => `
+                <div class="staff-card">
+                    <img src="${member.image}" alt="${member.name}">
+                    <h3>${member.name}</h3>
+                    <p class="role">${member.role}</p>
+                    <p class="about">${member.bio}</p>
+                </div>
+            `).join('');
+        };
+
+        document.addEventListener('DOMContentLoaded', renderTeamCards);
+    </script>
     <script src="script.js"></script>
     <script>
         feather.replace();

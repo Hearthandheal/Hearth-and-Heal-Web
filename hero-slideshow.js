@@ -1,17 +1,17 @@
-// Community photos background — cycles `assets/community-*` on hero sections and site-wide backdrop
+// Community photos background — cycles the images stored in assets/community on hero sections and the site backdrop
 (function () {
     const COMMUNITY_IMAGES = [
-        'assets/community-bg.jpg',
-        'assets/community-1.jpg',
-        'assets/community-2.jpg',
-        'assets/community-3.jpg',
-        'assets/community-4.jpg',
-        'assets/community-5.jpg',
-        'assets/community-6.jpg',
-        'assets/community-7.jpg',
-        'assets/community-8.jpg',
-        'assets/community-9.jpg',
-        'assets/community-10.jpg'
+        'assets/community/community (1).jpg',
+        'assets/community/community (2).jpg',
+        'assets/community/community (3).jpg',
+        'assets/community/community (4).jpg',
+        'assets/community/community (5).jpg',
+        'assets/community/community (6).jpg',
+        'assets/community/community (7).jpg',
+        'assets/community/community (8).jpg',
+        'assets/community/community (9).jpg',
+        'assets/community/community (10).jpg',
+        'assets/community/community (11).jpg'
     ];
 
     const ROTATE_MS = 9000;
