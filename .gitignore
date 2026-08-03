@@ -19,6 +19,8 @@ desktop.ini
 
 # Temporary files
 *.tmp
+*.tmp.ico
+*.ses
 .cache/
 .env
 
