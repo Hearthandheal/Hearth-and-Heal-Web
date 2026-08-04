@@ -1,12 +1,11 @@
-﻿
-ï»¿/**
+/**
  * Hearth and Heal - Authentication Logic
  * Robust system with Email Verification, Password hashing, and 2FA OTP.
  */
 
 const Auth = {
     // Relative path works both locally and in production, fallback to 3000 for file://
-    API_BASE: window.location.protocol === 'file:' ? 'http://localhost:3000' : window.location.origin,
+    API_BASE: window.location.protocol === 'file:' ? 'http://localhost:3000' : '',
     CURRENT_USER_KEY: 'hearth_current_user',
     JWT_KEY: 'hearth_jwt_token',
 
@@ -24,7 +23,7 @@ const Auth = {
 
         const authPages = ['login.html', 'signup.html', 'forgot-password.html'];
         // Pages that are accessible without login (Homepage, Mission, Contact, Services, Donate)
-        const publicPages = ['index.html', 'mission.html', 'contact.html', 'services.html', 'donate.html', 'verify-email.html'];
+        const publicPages = ['index.html', 'about.html', 'contact.html', 'services.html', 'donate.html', 'verify-email.html'];
 
         console.log(`[Auth] Checking access for: ${pageName}. Logged in: ${!!currentUser}`);
 
@@ -139,12 +138,15 @@ const Auth = {
     },
 
     // SIGNUP STEP 2 (Link)
-    verifyEmailLink: async (ref, token, password) => {
+    verifyEmailLink: async (ref, token, password, fullName, email) => {
         try {
+            const payload = { ref, code: token, password };
+            if (fullName) payload.fullName = fullName;
+            if (email) payload.email = email;
             const response = await fetch(`${Auth.API_BASE}/verify-email`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ref, code: token, password })
+                body: JSON.stringify(payload)
             });
             const data = await response.json();
             if (response.ok) return { success: true };
@@ -153,6 +155,7 @@ const Auth = {
             return { success: false, message: 'Server unreachable' };
         }
     },
+
 
     // LOGIN STEP 1
     login: async (email, password) => {
@@ -282,7 +285,7 @@ const Auth = {
         const headers = {};
         if (json) headers['Content-Type'] = 'application/json';
         const t = Auth.getToken();
-        if (t) headers['Authorization'] = 'Bearer ' + t;
+        if (t) headers.Authorization = `Bearer ${t}`;
         return headers;
     },
 
@@ -364,7 +367,7 @@ const Auth = {
             fd.append('avatar', file);
             const response = await fetch(`${Auth.API_BASE}/api/me/avatar`, {
                 method: 'POST',
-                headers: { Authorization: 'Bearer ' + t },
+                headers: { Authorization: `Bearer ${t}` },
                 body: fd
             });
             const text = await response.text();
@@ -420,4 +423,3 @@ const Auth = {
 })();
 
 Auth.checkSession();
-

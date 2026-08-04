@@ -562,6 +562,90 @@ header {
   width: 100%;
 }
 
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown .dropdown-trigger {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: inherit;
+  padding: 0.5rem 0;
+}
+
+.nav-dropdown .dropdown-trigger:hover,
+.nav-dropdown .dropdown-trigger:focus {
+  color: #00E676;
+}
+
+.dropdown-icon {
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.nav-dropdown .dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  min-width: 220px;
+  background: rgba(5, 5, 5, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 0.35rem 0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: 50;
+}
+
+.nav-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown.open .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown .dropdown-menu li {
+  margin: 0;
+}
+
+.nav-dropdown .dropdown-menu a {
+  display: block;
+  padding: 0.9rem 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-dropdown .dropdown-menu a:hover,
+.nav-dropdown .dropdown-menu a:focus {
+  background: rgba(0, 230, 118, 0.12);
+  color: #00E676;
+}
+
+@media (max-width: 920px) {
+  .nav-dropdown .dropdown-menu {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    background: rgba(5, 5, 5, 0.98);
+    border-radius: 16px;
+    box-shadow: none;
+    margin-top: 0.75rem;
+  }
+}
+
 /* Apply to existing buttons */
 .btn-primary {
   background: linear-gradient(135deg, #00E676 0%, #00FFA3 100%);

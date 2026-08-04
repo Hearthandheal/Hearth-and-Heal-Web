@@ -7,6 +7,151 @@ body {
   min-height: 100vh;
 }
 
+/* Homepage polish */
+.home-page .hero-eyebrow,
+.home-page .section-kicker {
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.home-page .hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(0, 230, 118, 0.3);
+  border-radius: 999px;
+  background: rgba(5, 5, 5, 0.45);
+}
+
+.home-page .hero-btns {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.home-page .hero-text-link,
+.home-page .text-link {
+  color: var(--color-white);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 230, 118, 0.7);
+  text-underline-offset: 0.4rem;
+}
+
+.home-page .hero-text-link span,
+.home-page .text-link span {
+  display: inline-block;
+  margin-left: 0.35rem;
+  transition: transform 0.25s ease;
+}
+
+.home-page .hero-text-link:hover span,
+.home-page .text-link:hover span { transform: translateX(0.3rem); }
+
+.home-intro {
+  background: linear-gradient(180deg, #090f0b 0%, var(--color-bg) 100%) !important;
+}
+
+.home-intro-grid {
+  align-items: center;
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.home-intro-copy h2,
+.home-action h2 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.15;
+  margin-bottom: 1.4rem;
+}
+
+.home-intro-copy > p:not(.section-kicker),
+.home-action p:not(.section-kicker) {
+  color: var(--color-text-light);
+  font-size: 1.08rem;
+  max-width: 39rem;
+}
+
+.home-pathways { display: grid; gap: 0.9rem; }
+
+.pathway-card {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: auto minmax(6rem, 0.7fr) minmax(0, 1.45fr);
+  padding: 1.35rem 1.5rem;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.pathway-card:hover {
+  background: rgba(0, 230, 118, 0.07);
+  border-color: rgba(0, 230, 118, 0.38);
+  transform: translateX(0.4rem);
+}
+
+.pathway-number {
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.pathway-card h3 { font-size: 1.2rem; margin: 0; }
+.pathway-card p { color: var(--color-text-light); font-size: 0.93rem; line-height: 1.55; margin: 0; }
+
+.home-action { padding: 1.5rem 0 6rem; }
+
+.home-action-content {
+  align-items: center;
+  background: linear-gradient(130deg, rgba(0, 230, 118, 0.15), rgba(0, 230, 118, 0.035));
+  border: 1px solid rgba(0, 230, 118, 0.25);
+  border-radius: 1.5rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 4rem);
+  position: relative;
+}
+
+.home-action-content::after {
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.24), transparent 68%);
+  content: '';
+  height: 24rem;
+  pointer-events: none;
+  position: absolute;
+  right: -10rem;
+  top: -10rem;
+  width: 24rem;
+}
+
+.home-action-content > * { position: relative; z-index: 1; }
+.home-action h2 { max-width: 37rem; }
+.home-action-links { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: flex-end; min-width: 15rem; }
+
+@media (max-width: 768px) {
+  .home-page .hero { min-height: 43rem; }
+  .home-page .hero-btns { align-items: stretch; flex-direction: column; }
+  .home-page .hero-btns .btn { width: 100%; }
+  .home-intro-grid { gap: 2.5rem; grid-template-columns: 1fr; }
+  .pathway-card { align-items: start; gap: 0.55rem; grid-template-columns: auto 1fr; }
+  .pathway-card p { grid-column: 2; }
+  .home-action { padding-bottom: 4rem; }
+  .home-action-content { align-items: flex-start; flex-direction: column; }
+  .home-action-links { justify-content: flex-start; min-width: auto; }
+}
+
 /* Glassmorphism Header */
 header {
   background: rgba(13, 13, 13, 0.85) !important;

@@ -32,7 +32,7 @@
             </a>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="mission.html" class="nav-link">Our Mission</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
                     <li><a href="services.html" class="nav-link">Our Services</a></li>
                     <li><a href="shop.html" class="nav-link">Shop</a></li>
                     <li><a href="contact.html" class="nav-link">Get Involved</a></li>
@@ -76,9 +76,12 @@
                         <div
                             style="background: var(--color-bg-dark); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">
                             <p style="font-size: 0.9rem; color: var(--color-text-light);">Paybill / Till Number</p>
-                            <h2 style="color: var(--color-primary); margin: 0.5rem 0;">3028117</h2>
+                            <h2 id="mpesa-till-number" style="color: var(--color-primary); margin: 0.5rem 0;">3028117</h2>
                             <p style="font-size: 0.9rem; color: var(--color-text-light);">Account Name: Hearth&Heal</p>
                         </div>
+
+                        <button type="button" class="btn btn-secondary copy-till-btn" data-till="3028117">Copy Till Number</button>
+                        <p class="donation-status" role="status" aria-live="polite"></p>
 
                         <div style="text-align: left; font-size: 0.9rem; color: var(--color-text-light);">
                             <p><strong>How to Donate:</strong></p>
@@ -178,7 +181,7 @@
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <div class="footer-links">
-                        <a href="mission.html">Our Mission</a>
+                        <a href="about.html">About Us</a>
                         <a href="services.html">Our Services</a>
                         <a href="shop.html">Shop</a>
                         <a href="contact.html">Get Involved</a>
@@ -213,6 +216,7 @@
 
     <!-- Scripts -->
     <script src="script.js"></script>
+    <script src="donate.js"></script>
     <script>
         feather.replace();
     </script>

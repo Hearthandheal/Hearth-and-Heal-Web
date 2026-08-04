@@ -58,7 +58,7 @@ app.get('/api/health', (req, res) => {
 
 // Catch-all route for frontend routing and static pages
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'mission.html'));
+  res.sendFile(path.join(__dirname, '..', 'about.html'));
 });
 
 // Start server

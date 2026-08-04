@@ -274,27 +274,27 @@ const OLAF_KNOWLEDGE = [
   {
     phrases: ["what is hearth", "who is hearth", "about hearth", "tell me about hearth", "hearth and heal", "hearth & heal"],
     words: ["organization", "nonprofit", "charity", "ngo", "who are you"],
-    reply: `<b>Hearth & Heal</b> is a restorative community organization grounded in faith and compassion. We create safe, inclusive spaces for people facing adversity, relational strain, or marginalization — through spiritual care, creative healing, practical support, and education. Explore our ${olafLink("mission.html", "Mission")} or ${olafLink("services.html", "Services")}. 💚`
+    reply: `<b>Hearth & Heal</b> is a restorative community organization grounded in faith and compassion. We create safe, inclusive spaces for people facing adversity, relational strain, or marginalization — through spiritual care, creative healing, practical support, and education. Explore our ${olafLink("about.html", "Mission")} or ${olafLink("services.html", "Services")}. 💚`
   },
   {
     phrases: ["our vision", "your vision", "what is your vision"],
     words: ["vision"],
-    reply: `Our vision: <b>“To heal the world and make it habitable for every individual.”</b> We work to correct dysfunctions that keep people, families, and societies from living with wholeness and dignity as intended. 🌍 More on ${olafLink("mission.html", "Our Mission")}.`
+    reply: `Our vision: <b>“To heal the world and make it habitable for every individual.”</b> We work to correct dysfunctions that keep people, families, and societies from living with wholeness and dignity as intended. 🌍 More on ${olafLink("about.html", "Our Mission")}.`
   },
   {
     phrases: ["our mission", "your mission", "what is your mission"],
     words: ["mission"],
-    reply: `Our mission: <b>Hearth & Heal exists to provide a safe, inclusive, and restorative environment for individuals navigating personal adversity, relational dysfunction and social marginalization.</b> We offer judgement-free support, dialogue, and practical guidance rooted in scripture. 📖 See ${olafLink("mission.html", "Mission")}.`
+    reply: `Our mission: <b>Hearth & Heal exists to provide a safe, inclusive, and restorative environment for individuals navigating personal adversity, relational dysfunction and social marginalization.</b> We offer judgement-free support, dialogue, and practical guidance rooted in scripture. 📖 See ${olafLink("about.html", "Mission")}.`
   },
   {
     phrases: ["flawless", "wholeness", "begin again", "courage to begin"],
     words: ["quote", "motto", "slogan"],
-    reply: `A line we love: <i>“We don’t chase flawless outcomes – We pursue wholeness, grace, and the courage to begin again.”</i> ✨ It's on our ${olafLink("mission.html", "Mission")} page.`
+    reply: `A line we love: <i>“We don’t chase flawless outcomes – We pursue wholeness, grace, and the courage to begin again.”</i> ✨ It's on our ${olafLink("about.html", "Mission")} page.`
   },
   {
     phrases: ["core values", "your values", "what do you stand for", "what do you believe"],
     words: ["values", "principles", "ethos"],
-    reply: `Our values include: <b>Compassion over Judgement</b>, <b>Truth Rooted in God’s Word</b>, <b>Dignity for Every Individual</b>, <b>Healing Through Community</b>, and <b>Empowerment Through Self-Help</b>. 🤝 Details on ${olafLink("mission.html", "Mission")}.`
+    reply: `Our values include: <b>Compassion over Judgement</b>, <b>Truth Rooted in God’s Word</b>, <b>Dignity for Every Individual</b>, <b>Healing Through Community</b>, and <b>Empowerment Through Self-Help</b>. 🤝 Details on ${olafLink("about.html", "Mission")}.`
   },
   {
     phrases: ["what services", "what do you offer", "programs", "help me", "how can you help"],
@@ -339,22 +339,22 @@ const OLAF_KNOWLEDGE = [
   {
     phrases: ["john haggee", "ceo", "founder", "chief executive", "who leads"],
     words: ["john", "ouma", "leader", "founder"],
-    reply: `Our <b>Founder & CEO is Mr. John Haggee Ouma</b> — he leads strategy and growth and is the author of <b>“I Chose To Let You Down.”</b> Meet the team on ${olafLink("mission.html", "Our Mission")}. 🌟`
+    reply: `Our <b>Founder & CEO is Mr. John Haggee Ouma</b> — he leads strategy and growth and is the author of <b>“I Chose To Let You Down.”</b> Meet the team on ${olafLink("about.html", "Our Mission")}. 🌟`
   },
   {
     phrases: ["faith emusugut", "secretary general"],
     words: ["secretary", "faith", "administration"],
-    reply: `<b>Ms. Faith Emusugut</b> is our <b>Secretary General</b>, overseeing administration, compliance, and organizational efficiency. 📋 ${olafLink("mission.html", "Team")}`
+    reply: `<b>Ms. Faith Emusugut</b> is our <b>Secretary General</b>, overseeing administration, compliance, and organizational efficiency. 📋 ${olafLink("about.html", "Team")}`
   },
   {
     phrases: ["graham ouma", "publications editor"],
     words: ["publications", "editor", "graham"],
-    reply: `<b>Mr. Graham Ouma</b> is our <b>Publications Editor</b>, shaping written content for clarity and impact. ✍️ ${olafLink("mission.html", "Team")}`
+    reply: `<b>Mr. Graham Ouma</b> is our <b>Publications Editor</b>, shaping written content for clarity and impact. ✍️ ${olafLink("about.html", "Team")}`
   },
   {
     phrases: ["angela elijah", "events manager"],
     words: ["events", "angela", "workshops"],
-    reply: `<b>Ms. Angela Elijah</b> is our <b>Events Manager</b>, coordinating gatherings and wellness workshops. 🎉 ${olafLink("mission.html", "Team")}`
+    reply: `<b>Ms. Angela Elijah</b> is our <b>Events Manager</b>, coordinating gatherings and wellness workshops. 🎉 ${olafLink("about.html", "Team")}`
   },
   {
     phrases: ["sarah gacoki", "merchandise"],
@@ -364,7 +364,7 @@ const OLAF_KNOWLEDGE = [
   {
     phrases: ["emmanuel letoiya", "marketing"],
     words: ["marketing", "partnerships", "emmanuel"],
-    reply: `Our reach grows through <b>External Marketing</b> led by Mr. Emmanuel K. Letoiya (partnerships). 📣 ${olafLink("mission.html", "Team")}`
+    reply: `Our reach grows through <b>External Marketing</b> led by Mr. Emmanuel K. Letoiya (partnerships). 📣 ${olafLink("about.html", "Team")}`
   },
   {
     phrases: ["who is olaf", "your job", "mascot", "wellness companion"],
@@ -374,7 +374,7 @@ const OLAF_KNOWLEDGE = [
   {
     phrases: ["team", "staff", "meet the team", "who works"],
     words: ["employees", "people", "board"],
-    reply: `Meet our leadership and team — CEO John Haggee Ouma, Secretary General Faith Emusugut, Publications Editor Graham Ouma, Events Manager Angela Elijah, Graphic Designer Sarah Gacoki, marketing leads, and more — on ${olafLink("mission.html", "Our Mission")}. 👥`
+    reply: `Meet our leadership and team — CEO John Haggee Ouma, Secretary General Faith Emusugut, Publications Editor Graham Ouma, Events Manager Angela Elijah, Graphic Designer Sarah Gacoki, marketing leads, and more — on ${olafLink("about.html", "Our Mission")}. 👥`
   },
   {
     phrases: ["volunteer", "get involved", "join", "partner"],
@@ -424,7 +424,7 @@ const OLAF_KNOWLEDGE = [
   {
     phrases: ["website", "privacy", "policy"],
     words: ["site", "cookies"],
-    reply: `You're on the official Hearth & Heal site. Quick links: ${olafLink("index.html", "Home")}, ${olafLink("mission.html", "Mission")}, ${olafLink("services.html", "Services")}, ${olafLink("donate.html", "Donate")}. Privacy policy link is in the footer when available. 🌐`
+    reply: `You're on the official Hearth & Heal site. Quick links: ${olafLink("index.html", "Home")}, ${olafLink("about.html", "Mission")}, ${olafLink("services.html", "Services")}, ${olafLink("donate.html", "Donate")}. Privacy policy link is in the footer when available. 🌐`
   }
 ];
 
@@ -545,7 +545,7 @@ document.addEventListener("DOMContentLoaded", () => {
         say(OLAF_GREETINGS[Math.floor(Math.random() * OLAF_GREETINGS.length)], "ai");
         setTimeout(() => {
           say(
-            `Ask about ${olafLink("mission.html", "mission")}, ${olafLink("services.html", "services")}, ${olafLink("shop.html", "shop")}, ${olafLink("donate.html", "donate")}, or ${olafLink("contact.html", "contact")}. ⛄`,
+            `Ask about ${olafLink("about.html", "mission")}, ${olafLink("services.html", "services")}, ${olafLink("shop.html", "shop")}, ${olafLink("donate.html", "donate")}, or ${olafLink("contact.html", "contact")}. ⛄`,
             "ai"
           );
         }, 650);
@@ -611,7 +611,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const norm = normalizeOlafQuery(input);
     const tokens = olafTokens(norm);
     if (!norm) {
-      return `Type a question — for example “What is your mission?” or “How do I donate?” — and I'll do my best! ${olafLink("mission.html", "Mission")} · ${olafLink("donate.html", "Donate")}`;
+      return `Type a question — for example “What is your mission?” or “How do I donate?” — and I'll do my best! ${olafLink("about.html", "Mission")} · ${olafLink("donate.html", "Donate")}`;
     }
 
     const crisis = olafEmotional(norm);
@@ -631,6 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return "I'm Olaf the wellness bot for Hearth & Heal — I leave the movie plot to the movies. Ask me about healing, donations, or our team! ⛄";
     }
 
-    return `I’m not sure I have a specific answer for that yet — but I know a lot about <b>Hearth & Heal</b>! Try asking about: ${olafLink("mission.html", "mission & values")}, ${olafLink("services.html", "services")}, ${olafLink("shop.html", "shop / book")}, ${olafLink("donate.html", "donating (M-Pesa 3028117)")}, ${olafLink("mission.html", "our team")}, or ${olafLink("contact.html", "contact")}. Or rephrase with a keyword like “CEO”, “volunteer”, or “Recovery Room”. ❄️`;
+    return `I’m not sure I have a specific answer for that yet — but I know a lot about <b>Hearth & Heal</b>! Try asking about: ${olafLink("about.html", "mission & values")}, ${olafLink("services.html", "services")}, ${olafLink("shop.html", "shop / book")}, ${olafLink("donate.html", "donating (M-Pesa 3028117)")}, ${olafLink("about.html", "our team")}, or ${olafLink("contact.html", "contact")}. Or rephrase with a keyword like “CEO”, “volunteer”, or “Recovery Room”. ❄️`;
   }
 });
+
