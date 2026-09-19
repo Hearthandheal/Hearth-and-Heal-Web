@@ -125,6 +125,8 @@ const initDb = async () => {
         if (isProduction) {
             await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS name TEXT`);
             await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone TEXT`);
+            await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS country TEXT DEFAULT 'Kenya'`);
+            await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS date_of_birth TEXT`);
             await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS bio TEXT`);
             await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP`);
             await run(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_path TEXT`);
@@ -134,6 +136,8 @@ const initDb = async () => {
             const colNames = userColumns.map(c => c.name);
             if (!colNames.includes('name')) await run(`ALTER TABLE users ADD COLUMN name TEXT`);
             if (!colNames.includes('phone')) await run(`ALTER TABLE users ADD COLUMN phone TEXT`);
+            if (!colNames.includes('country')) await run(`ALTER TABLE users ADD COLUMN country TEXT DEFAULT 'Kenya'`);
+            if (!colNames.includes('date_of_birth')) await run(`ALTER TABLE users ADD COLUMN date_of_birth TEXT`);
             if (!colNames.includes('bio')) await run(`ALTER TABLE users ADD COLUMN bio TEXT`);
             if (!colNames.includes('updated_at')) await run(`ALTER TABLE users ADD COLUMN updated_at TIMESTAMP`);
             if (!colNames.includes('avatar_path')) await run(`ALTER TABLE users ADD COLUMN avatar_path TEXT`);

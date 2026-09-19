@@ -704,6 +704,128 @@ const avatarUpload = multer({
 
 /* ----------------------------- Auth API ----------------------------- */
 
+app.post("/api/auth/register", authLimiter, async (req, res) => {
+    try {
+        const fullName = String(req.body.fullName || req.body.name || "").trim();
+        const email = normalizeEmail(req.body.email);
+        const password = typeof req.body.password === "string" ? req.body.password : "";
+        const phone = String(req.body.phone || "").trim();
+        const country = String(req.body.country || "Kenya").trim();
+        const dateOfBirth = req.body.dateOfBirth || null;
+
+        if (!fullName || !email || !password) {
+            return res.status(400).json({ success: false, error: "Name, email, and password are required" });
+        }
+        if (password.length < 8) {
+            return res.status(400).json({ success: false, error: "Password must be at least 8 characters" });
+        }
+
+        const exists = await db.query(`SELECT * FROM users WHERE LOWER(identifier) = ?`, [email]);
+        if (exists[0]) {
+            return res.status(409).json({ success: false, error: "An account with this email already exists" });
+        }
+
+        const passwordHash = await bcrypt.hash(password, 12);
+        await db.run(
+            `INSERT INTO users (identifier, password_hash, name, phone, verified, created_at, updated_at) VALUES (?, ?, ?, ?, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
+            [email, passwordHash, fullName, phone || null]
+        );
+
+        if (country || dateOfBirth) {
+            await db.run(
+                `UPDATE users SET country = ?, date_of_birth = ? WHERE LOWER(identifier) = ?`,
+                [country || "Kenya", dateOfBirth || null, email]
+            );
+        }
+
+        const userRows = await db.query(`SELECT * FROM users WHERE LOWER(identifier) = ?`, [email]);
+        const user = userRows[0];
+        const token = signJwt({ email: user.identifier });
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: COOKIE_SECURE,
+            sameSite: "Strict",
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Account created successfully.",
+            user: {
+                email: user.identifier,
+                name: user.name,
+                phone: user.phone,
+                country: user.country || country || "Kenya",
+                verified: !!user.verified
+            }
+        });
+    } catch (err) {
+        logger.error("Direct register failed", { error: err.message });
+        res.status(500).json({ success: false, error: err.message || "Server error" });
+    }
+});
+
+app.post("/api/auth/login", authLimiter, async (req, res) => {
+    try {
+        const email = normalizeEmail(req.body.email);
+        const password = typeof req.body.password === "string" ? req.body.password : "";
+        if (!email || !password) {
+            return res.status(400).json({ success: false, error: "Email and password required" });
+        }
+
+        const users = await db.query(`SELECT * FROM users WHERE LOWER(identifier) = ? AND verified = TRUE`, [email]);
+        const user = users[0];
+        if (!user) {
+            return res.status(401).json({ success: false, error: "Invalid credentials" });
+        }
+
+        const valid = user.password_hash ? await bcrypt.compare(password, user.password_hash) : false;
+        if (!valid) {
+            return res.status(401).json({ success: false, error: "Invalid credentials" });
+        }
+
+        const token = signJwt({ email: user.identifier });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: COOKIE_SECURE,
+            sameSite: "Strict",
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        return res.json({
+            success: true,
+            token,
+            user: {
+                email: user.identifier,
+                name: user.name || "",
+                phone: user.phone || "",
+                country: user.country || "Kenya"
+            }
+        });
+    } catch (err) {
+        logger.error("Direct login failed", { error: err.message });
+        res.status(500).json({ success: false, error: err.message || "Server error" });
+    }
+});
+
+app.get("/api/auth/me", requireAuth, async (req, res) => {
+    try {
+        return res.json({ success: true, authenticated: true, user: publicUserFromRow(req.authUser) });
+    } catch (err) {
+        return res.status(500).json({ success: false, authenticated: false, error: err.message || "Server error" });
+    }
+});
+
+app.post("/api/auth/logout", (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: COOKIE_SECURE,
+        sameSite: "Strict"
+    });
+    return res.json({ success: true, message: "Logged out" });
+});
+
 app.post("/request-verification", authLimiter, async (req, res) => {
     try {
         const email = normalizeEmail(req.body.email);
