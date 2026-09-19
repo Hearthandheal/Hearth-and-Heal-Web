@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: hearth-and-heal-api
+    name: hearth-and-heal-org
     env: node
     plan: free
-    buildCommand: cd server && npm install
-    startCommand: cd server && npm start
+    buildCommand: npm install
+    startCommand: node app.js
     envVars:
       - key: NODE_ENV
         value: production
