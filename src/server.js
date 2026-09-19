@@ -6,9 +6,28 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 const mailer = require('./utils/mailer');
 
 const app = express();
+
+// Simple HTML template renderer: replaces {{key}} with provided values
+function renderTemplate(templateName, vars = {}) {
+  try {
+    const templatePath = path.join(__dirname, 'emails', templateName);
+    let html = fs.readFileSync(templatePath, 'utf8');
+    Object.keys(vars).forEach((k) => {
+      const re = new RegExp('{{' + k + '}}', 'g');
+      html = html.replace(re, vars[k]);
+    });
+    return html;
+  } catch (err) {
+    console.error('Template render error:', err);
+    return null;
+  }
+}
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -94,10 +113,12 @@ app.post("/api/auth/register", async (req, res) => {
 
     const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify-email?token=${verificationTokenRaw}`;
 
+    const html = renderTemplate('verification.html', { url: verificationUrl, name: newUser.name || 'there' });
     const mailResult = await mailer.sendMail({
       to: newUser.email,
       subject: 'Verify your Hearth & Heal account',
       text: `Please verify your account by visiting: ${verificationUrl}`,
+      html: html || undefined,
     });
 
     if (mailResult.previewUrl) {
@@ -253,10 +274,12 @@ app.post('/api/auth/forgot-password', async (req, res) => {
     await user.save();
 
     const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${resetRaw}`;
+    const html = renderTemplate('reset.html', { url: resetUrl, name: user.name || 'there' });
     const mailResult = await mailer.sendMail({
       to: user.email,
       subject: 'Hearth & Heal password reset',
       text: `Reset your password by visiting: ${resetUrl}`,
+      html: html || undefined,
     });
 
     if (mailResult.previewUrl) console.log('Password reset email preview URL:', mailResult.previewUrl);
