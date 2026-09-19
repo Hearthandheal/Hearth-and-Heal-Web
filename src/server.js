@@ -86,7 +86,7 @@ if (process.env.TRUST_PROXY === 'true') {
 
 
 // =========================
-// REGISTER
+// REGISTER (creates account, sends verification email; does NOT issue session until verified)
 // =========================
 app.post("/api/auth/register", async (req, res) => {
   try {
@@ -123,15 +123,15 @@ app.post("/api/auth/register", async (req, res) => {
       name,
       email: normalizedEmail,
       password: hashedPassword,
+      isVerified: false,
     });
 
-    await newUser.save();
-
-    // create email verification token
+    // create email verification token (store hashed)
     const verificationTokenRaw = crypto.randomBytes(32).toString('hex');
     const verificationTokenHash = crypto.createHash('sha256').update(verificationTokenRaw).digest('hex');
     newUser.verificationToken = verificationTokenHash;
     newUser.verificationTokenExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+
     await newUser.save();
 
     const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify-email?token=${verificationTokenRaw}`;
@@ -144,21 +144,53 @@ app.post("/api/auth/register", async (req, res) => {
       html: html || undefined,
     });
 
-    if (mailResult.previewUrl) {
+    if (mailResult && mailResult.previewUrl) {
       console.log('Email preview URL (Ethereal):', mailResult.previewUrl);
     }
 
-    const token = createToken({ id: newUser._id });
-
-    res.cookie("token", token, cookieOptions);
-
+    // Do NOT issue session token until user verifies their email
     return res.status(201).json({
       success: true,
-      user: { id: newUser._id, name: newUser.name, email: newUser.email },
+      message: 'Verification email sent. Please check your inbox to activate your account.',
     });
   } catch (err) {
     console.error("Register error:", err);
     return res.status(500).json({ success: false, message: "Server error." });
+  }
+});
+
+
+// =========================
+// VERIFY EMAIL
+// =========================
+app.get('/api/auth/verify-email', async (req, res) => {
+  try {
+    const { token } = req.query;
+    if (!token) return res.status(400).send('Missing token');
+
+    const tokenHash = crypto.createHash('sha256').update(String(token)).digest('hex');
+    const user = await User.findOne({ verificationToken: tokenHash, verificationTokenExpires: { $gt: Date.now() } });
+
+    if (!user) {
+      return res.status(400).send('Verification token is invalid or has expired.');
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpires = undefined;
+    await user.save();
+
+    // Issue session token now that the email is verified
+    const sessionToken = createToken({ id: user._id });
+    res.cookie('token', sessionToken, cookieOptions);
+
+    // If frontend expects a redirect, redirect to account page; otherwise return JSON
+    const redirectTo = process.env.FRONTEND_URL ? `${process.env.FRONTEND_URL.replace(/\/$/, '')}/account` : '/account';
+    // Redirect with 302 to the account page
+    return res.redirect(302, redirectTo);
+  } catch (err) {
+    console.error('Verify email error:', err);
+    return res.status(500).send('Server error during verification.');
   }
 });
 
@@ -215,18 +247,14 @@ async function authenticate(req, res, next) {
         req.headers.authorization.split(" ")[1]);
 
     if (!token) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Not authenticated." });
+      return res.status(401).json({ success: false, authenticated: false });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "dev-secret");
     const user = await User.findById(decoded.id).select('-password');
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid token / user not found." });
+      return res.status(401).json({ success: false, authenticated: false });
     }
 
     // expose minimal user info
@@ -234,9 +262,7 @@ async function authenticate(req, res, next) {
     next();
   } catch (err) {
     console.error("Auth error:", err);
-    return res
-      .status(401)
-      .json({ success: false, message: "Invalid or expired token." });
+    return res.status(401).json({ success: false, authenticated: false });
   }
 }
 
