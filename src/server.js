@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const crypto = require('crypto');
+const mailer = require('./utils/mailer');
 
 const app = express();
 
@@ -82,6 +84,25 @@ app.post("/api/auth/register", async (req, res) => {
     });
 
     await newUser.save();
+
+    // create email verification token
+    const verificationTokenRaw = crypto.randomBytes(32).toString('hex');
+    const verificationTokenHash = crypto.createHash('sha256').update(verificationTokenRaw).digest('hex');
+    newUser.verificationToken = verificationTokenHash;
+    newUser.verificationTokenExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+    await newUser.save();
+
+    const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verify-email?token=${verificationTokenRaw}`;
+
+    const mailResult = await mailer.sendMail({
+      to: newUser.email,
+      subject: 'Verify your Hearth & Heal account',
+      text: `Please verify your account by visiting: ${verificationUrl}`,
+    });
+
+    if (mailResult.previewUrl) {
+      console.log('Email preview URL (Ethereal):', mailResult.previewUrl);
+    }
 
     const token = createToken({ id: newUser._id });
 
@@ -180,6 +201,96 @@ async function authenticate(req, res, next) {
 // =========================
 app.get("/api/auth/me", authenticate, (req, res) => {
   return res.json({ success: true, user: req.user });
+});
+
+// =========================
+// EMAIL VERIFICATION
+// =========================
+app.get('/api/auth/verify-email', async (req, res) => {
+  try {
+    const { token } = req.query;
+    if (!token) return res.status(400).json({ success: false, message: 'Token is required' });
+
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await User.findOne({ verificationToken: tokenHash, verificationTokenExpires: { $gt: Date.now() } });
+
+    if (!user) {
+      // redirect back to frontend with failure
+      const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verified?success=false`;
+      return res.redirect(redirectUrl);
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpires = undefined;
+    await user.save();
+
+    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verified?success=true`;
+    return res.redirect(redirectUrl);
+  } catch (err) {
+    console.error('Verify email error:', err);
+    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/auth/verified?success=false`;
+    return res.redirect(redirectUrl);
+  }
+});
+
+// =========================
+// FORGOT PASSWORD
+// =========================
+app.post('/api/auth/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ success: false, message: 'Email is required' });
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const user = await User.findOne({ email: normalizedEmail });
+    if (!user) return res.status(200).json({ success: true, message: 'If that account exists, a reset email has been sent.' });
+
+    const resetRaw = crypto.randomBytes(32).toString('hex');
+    const resetHash = crypto.createHash('sha256').update(resetRaw).digest('hex');
+    user.resetPasswordToken = resetHash;
+    user.resetPasswordExpires = Date.now() + 60 * 60 * 1000; // 1 hour
+    await user.save();
+
+    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${resetRaw}`;
+    const mailResult = await mailer.sendMail({
+      to: user.email,
+      subject: 'Hearth & Heal password reset',
+      text: `Reset your password by visiting: ${resetUrl}`,
+    });
+
+    if (mailResult.previewUrl) console.log('Password reset email preview URL:', mailResult.previewUrl);
+
+    return res.status(200).json({ success: true, message: 'If that account exists, a reset email has been sent.' });
+  } catch (err) {
+    console.error('Forgot password error:', err);
+    return res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// =========================
+// RESET PASSWORD
+// =========================
+app.post('/api/auth/reset-password', async (req, res) => {
+  try {
+    const { token, password } = req.body;
+    if (!token || !password) return res.status(400).json({ success: false, message: 'Token and password are required' });
+    if (password.length < 8) return res.status(400).json({ success: false, message: 'Password must be at least 8 characters.' });
+
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await User.findOne({ resetPasswordToken: tokenHash, resetPasswordExpires: { $gt: Date.now() } });
+    if (!user) return res.status(400).json({ success: false, message: 'Invalid or expired token' });
+
+    user.password = await bcrypt.hash(password, 12);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    return res.status(200).json({ success: true, message: 'Password reset successful' });
+  } catch (err) {
+    console.error('Reset password error:', err);
+    return res.status(500).json({ success: false, message: 'Server error' });
+  }
 });
 
 // =========================
