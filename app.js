@@ -134,7 +134,7 @@ db.initDb()
 /* ----------------------------- Helpers ---------------------------------- */
 const ENV = {
     PORT: process.env.PORT || 3000,
-    BASE_URL: process.env.BASE_URL || "http://localhost:3000",
+    BASE_URL: process.env.BASE_URL || process.env.RENDER_EXTERNAL_URL || process.env.RENDER_URL || process.env.PUBLIC_URL || "http://localhost:3000",
     BREVO_API_KEY: process.env.BREVO_API_KEY,
     BREVO_SMTP_LOGIN: process.env.BREVO_SMTP_LOGIN || "a6febf001@smtp-brevo.com",
     EMAIL_FROM: process.env.EMAIL_FROM || "hearthandhealorg@gmail.com",
@@ -165,6 +165,17 @@ function safeJsonParse(str, fallback = {}) {
     } catch {
         return fallback;
     }
+}
+
+function resolveBaseUrl(req = null) {
+    const envValue = process.env.BASE_URL || process.env.RENDER_EXTERNAL_URL || process.env.RENDER_URL || process.env.PUBLIC_URL;
+    if (envValue) return String(envValue).replace(/\/$/, "");
+    if (req) {
+        const proto = req.headers["x-forwarded-proto"] || req.protocol || "http";
+        const host = req.get("host") || "localhost:3000";
+        return `${proto}://${host}`;
+    }
+    return ENV.BASE_URL || "http://localhost:3000";
 }
 
 function publicUserFromRow(row) {
@@ -700,6 +711,10 @@ app.post("/request-verification", authLimiter, async (req, res) => {
             return res.status(400).json({ error: "Valid email required" });
         }
 
+        if (process.env.NODE_ENV === "production" && !ENV.BREVO_API_KEY) {
+            return res.status(503).json({ error: "Email delivery is not configured on this server. Set BREVO_API_KEY in Render environment variables." });
+        }
+
         // Check 1-minute cooldown
         const duration = 60 * 60 * 1000; // 1 hour expiry as requested
         const recent = await db.query(
@@ -717,7 +732,7 @@ app.post("/request-verification", authLimiter, async (req, res) => {
             [ref, codeHash, email, Date.now() + duration]
         );
 
-        const verifyLink = `${ENV.BASE_URL}/verify-email.html?ref=${encodeURIComponent(ref)}&token=${encodeURIComponent(otp)}`;
+        const verifyLink = `${resolveBaseUrl(req)}/verify-email.html?ref=${encodeURIComponent(ref)}&token=${encodeURIComponent(otp)}`;
 
         const emailHtml = getEmailTemplate("Welcome to Hearth & Heal! 🌿", `
             <h3>Verify your account to get started</h3>
@@ -1055,6 +1070,10 @@ app.post("/api/auth/forgot-password", resetLimiter, async (req, res) => {
         const email = normalizeEmail(req.body.email);
         if (!email) return res.status(400).json({ error: "Email required" });
 
+        if (process.env.NODE_ENV === "production" && !ENV.BREVO_API_KEY) {
+            return res.status(503).json({ error: "Email delivery is not configured on this server. Set BREVO_API_KEY in Render environment variables." });
+        }
+
         const users = await db.query(
             `SELECT * FROM users WHERE LOWER(identifier) = ? AND verified = TRUE`,
             [email]
@@ -1083,7 +1102,7 @@ app.post("/api/auth/forgot-password", resetLimiter, async (req, res) => {
         );
 
         // Link format: /forgot-password.html?token=TOKEN
-        const resetLink = `${ENV.BASE_URL}/forgot-password.html?token=${token}`;
+        const resetLink = `${resolveBaseUrl(req)}/forgot-password.html?token=${token}`;
 
         const emailHtml = getEmailTemplate("Password Reset Requested 🔑", `
             <h3>Did you forget your password?</h3>
