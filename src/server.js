@@ -9,8 +9,24 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const mailer = require('./utils/mailer');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
+
+// Security middleware
+app.use(helmet());
+
+// Apply rate limiting to auth endpoints to mitigate brute-force attacks
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// apply to auth routes
+app.use('/api/auth/', authLimiter);
 
 // Simple HTML template renderer: replaces {{key}} with provided values
 function renderTemplate(templateName, vars = {}) {
@@ -58,9 +74,16 @@ const createToken = (payload) =>
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
+  // If frontend is on a different domain, consider 'none' + secure: true in production
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
+
+// If running behind a proxy (e.g., Heroku, nginx) and using secure cookies, enable trust proxy
+if (process.env.TRUST_PROXY === 'true') {
+  app.set('trust proxy', 1);
+}
+
 
 // =========================
 // REGISTER

@@ -6,7 +6,22 @@ let isTestAccount = false;
 async function getTransporter() {
   if (transporter) return transporter;
 
-  // Create an Ethereal test account for development
+  // If SMTP settings provided in env, use them for production or real sending
+  if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587', 10),
+      secure: process.env.SMTP_SECURE === 'true' || false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+    console.log('Using SMTP transporter from environment variables');
+    return transporter;
+  }
+
+  // Fallback to Ethereal test account for development
   const testAccount = await nodemailer.createTestAccount();
   transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
