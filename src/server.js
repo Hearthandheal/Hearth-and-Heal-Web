@@ -18,9 +18,15 @@ app.use(
   })
 );
 
-// Temporary in-memory users.
-// Replace this with your database once the login flow is confirmed working.
-const users = [];
+// MongoDB with Mongoose
+const mongoose = require('mongoose');
+const User = require('./models/user');
+
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/hearthandheal';
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
 
 // Helpers
 const createToken = (payload) =>
@@ -58,7 +64,7 @@ app.post("/api/auth/register", async (req, res) => {
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    const existingUser = users.find((user) => user.email === normalizedEmail);
+    const existingUser = await User.findOne({ email: normalizedEmail });
 
     if (existingUser) {
       return res.status(409).json({
@@ -69,22 +75,21 @@ app.post("/api/auth/register", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = {
-      id: Date.now().toString(),
+    const newUser = new User({
       name,
       email: normalizedEmail,
       password: hashedPassword,
-    };
+    });
 
-    users.push(user);
+    await newUser.save();
 
-    const token = createToken({ id: user.id });
+    const token = createToken({ id: newUser._id });
 
     res.cookie("token", token, cookieOptions);
 
     return res.status(201).json({
       success: true,
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { id: newUser._id, name: newUser.name, email: newUser.email },
     });
   } catch (err) {
     console.error("Register error:", err);
@@ -105,7 +110,7 @@ app.post("/api/auth/login", async (req, res) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
-    const user = users.find((u) => u.email === normalizedEmail);
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       return res
@@ -120,12 +125,12 @@ app.post("/api/auth/login", async (req, res) => {
         .json({ success: false, message: "Invalid credentials." });
     }
 
-    const token = createToken({ id: user.id });
+    const token = createToken({ id: user._id });
     res.cookie("token", token, cookieOptions);
 
     return res.json({
       success: true,
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (err) {
     console.error("Login error:", err);
@@ -136,7 +141,7 @@ app.post("/api/auth/login", async (req, res) => {
 // =========================
 // AUTH MIDDLEWARE
 // =========================
-function authenticate(req, res, next) {
+async function authenticate(req, res, next) {
   try {
     const token =
       req.cookies?.token ||
@@ -151,7 +156,7 @@ function authenticate(req, res, next) {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "dev-secret");
-    const user = users.find((u) => u.id === decoded.id);
+    const user = await User.findById(decoded.id).select('-password');
 
     if (!user) {
       return res
@@ -160,7 +165,7 @@ function authenticate(req, res, next) {
     }
 
     // expose minimal user info
-    req.user = { id: user.id, name: user.name, email: user.email };
+    req.user = { id: user._id, name: user.name, email: user.email };
     next();
   } catch (err) {
     console.error("Auth error:", err);
